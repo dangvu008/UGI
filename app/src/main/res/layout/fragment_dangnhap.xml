@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background_choosed">
+
+   <android.support.design.widget.TextInputLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/input_layout_DangNhap_Email"
+       >
+       <dang.ugi.com.customView.customEdittextEmail
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/edit_dangNhap_email"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="30dp"
+           android:hint="Email hoặc số điện thoại"
+           android:layout_marginLeft="5dp"
+           android:layout_marginRight="5dp"
+           android:textColor="@color/colorTextHint"
+
+           android:padding="10dp" />
+   </android.support.design.widget.TextInputLayout>
+
+   <android.support.design.widget.TextInputLayout
+       android:id="@+id/input_layout_dangNhap_matkhau"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       >
+       <dang.ugi.com.customView.customEditTextPassword
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:inputType="textPassword"
+           android:ems="10"
+           android:id="@+id/edit_DangNhap_MatKhau"
+           android:layout_marginTop="5dp"
+           android:hint="Mật Khẩu"
+           android:padding="10dp"
+           android:layout_marginLeft="5dp"
+           android:layout_marginRight="5dp"
+           android:textColor="@color/colorTextHint"
+           app:useStrike="true"
+           />
+   </android.support.design.widget.TextInputLayout>
+<TextView
+    android:id="@+id/tvQuenMatKhau"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/quenMatKhau"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="10dp" />
+    <Button
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:id="@+id/btnDangNhap"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#FFFF"
+        android:background="@color/colorButtonLogin"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Hoặc Đăng Nhập Bằng"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:textSize="18dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibtnLogin_facebook"
+            android:src="@drawable/ic_facebook"
+            android:padding="15dp"
+            android:background="@color/colorButtonLoginFacebook"
+            android:layout_marginRight="20dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibtnLogin_google"
+            android:src="@drawable/ic_google"
+            android:padding="15dp"
+            android:background="@color/colorButtonLoginGoogle" />
+    </LinearLayout>
+</LinearLayout>

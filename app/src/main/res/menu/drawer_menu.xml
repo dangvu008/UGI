@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/item_drawer_goiMon" android:title="Gọi món" android:icon="@drawable/ic_order_food"/>
+        <item android:title="thực đơn" android:id="@+id/item_drawer_thucdon" android:icon="@drawable/ic_menu_food"/>
+        <item android:title="Bàn" android:id="@+id/item_drawer_ban" android:icon="@drawable/ic_table"/>
+        <item android:id="@+id/item_drawer_NguoiDung" android:title="Người dùng" android:icon="@drawable/ic_people_outline"/>
+        <item android:title="Cửa hàng" android:id="@+id/item_drawer_cuahang" android:icon="@drawable/ic_shop"/>
+        <item android:id="@+id/item_drawer_thongke" android:title="Thống kê" android:icon="@drawable/ic_bar_chart"/>
+    </group>
+</menu>

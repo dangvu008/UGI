@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item_popup_themMon_themLoaiCoSan" android:title="@string/ThemTheoLoaiMon"/>
+    <item android:id="@+id/item_popup_themMon_ChonCoSan" android:title="@string/ThemTuDanhSachCoSan"/>
+    <item android:id="@+id/item_popup_themMon_ThemMoi" android:title="@string/ThemMoi"/>
+</menu>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_goi_mon_them_mon_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="dang.ugi.com.view.ChiTietGoiMon.GoiMonThemMonDialog">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_validate_dialog_goimon_autocompleteTenMon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/autoCompleteTextView_dialog_goimon_tenmon"
+                android:hint="@string/NhapTenMon"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textColorHint="@color/color_background_choosed"
+                android:background="@color/colorText"
+                android:dropDownSelector="@color/cardview_shadow_start_color"
+                android:dropDownWidth="match_parent"
+                android:popupBackground="@color/colorPrimary" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_validate_dialog_goimon_soluong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:weightSum="1"
+                android:gravity="center"
+                android:layout_margin="10dp">
+
+                <ImageButton
+                    android:id="@+id/img_btn_themMonVaoGoiMon_trusoluong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_minus"
+                    android:layout_gravity="center"
+                    android:background="@color/cardview_light_background"
+                    android:baselineAlignBottom="false"
+                    android:layout_weight="0.4"
+                    tools:ignore="InefficientWeight,UnusedAttribute"
+                    android:adjustViewBounds="false"
+                    android:contextClickable="false"
+                    android:cropToPadding="false"
+                    android:keepScreenOn="false"
+                    android:isScrollContainer="false" />
+
+                <EditText
+                    android:id="@+id/editText_danggoimon_soluong"
+                    android:layout_width="107dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:text="1"
+                    android:layout_marginRight="10dp"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:numeric="integer"
+                    android:maxLength="3"
+                    android:paddingLeft="20dp"
+                    tools:ignore="Deprecated,HardcodedText,RtlHardcoded,RtlSymmetry"
+                    android:maxLines="1" />
+
+                <ImageButton
+                    android:id="@+id/img_btn_themMonVaoGoiMoncongsoluong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_plus"
+                    android:background="@color/cardview_light_background"
+                    android:layout_weight="0.4"
+                    tools:ignore="InefficientWeight" />
+            </LinearLayout>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal">
+
+            <Button
+                android:id="@+id/btn_themMonVaoGoiMon_them"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/them"
+                android:padding="5dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/cardview_light_background"
+                android:layout_marginEnd="10dp"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/btn_themMonVaoGoiMon_thoat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/thoat"
+                android:padding="5dp"
+                android:background="@color/colorButtonLogin"
+                android:textColor="@color/cardview_light_background"
+                tools:ignore="ButtonStyle"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

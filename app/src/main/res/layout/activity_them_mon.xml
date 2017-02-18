@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app2="http://schemas.android.com/tools"
+    android:id="@+id/activity_them_mon"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:weightSum="1">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_layout_TenMon"
+            >
+            <MultiAutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/multiAutoTenMon"
+                android:completionThreshold="2"
+                android:layout_weight="1"
+                android:hint="Tên Món" />
+
+        </android.support.design.widget.TextInputLayout>
+
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <Spinner
+              android:layout_height="wrap_content"
+              android:id="@+id/spinnerLoaiMon"
+              android:layout_width="250dp"
+              android:animateLayoutChanges="true"
+              style="@android:style/Widget.DeviceDefault.Light.Spinner"
+              android:gravity="center_vertical|fill"
+              android:popupBackground="@color/colorText"
+              android:dropDownSelector="?android:attr/actionModeBackground"
+              android:padding="10dp"
+              android:paddingTop="15dp"
+              android:paddingBottom="15dp" />
+
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@android:drawable/ic_input_add"
+              android:id="@+id/imageView_chuyen_themLoaiMon"
+              android:backgroundTintMode="src_in"
+              android:adjustViewBounds="true" />
+      </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_layout_Gia"
+            >
+
+            <dang.ugi.com.customView.customEdittextEmail
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_GiaMon"
+                android:layout_gravity="center_horizontal"
+                android:hint="Giá"
+                android:textColor="@color/colorTextHint"
+                android:padding="10dp" />
+        </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Chọn hình ảnh món :"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/imageViewHinhAnhMon"
+                android:layout_width="158dp"
+                android:layout_height="120dp"
+                android:layout_weight="0.80"
+                android:src="@drawable/coffe_default"
+                />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm vào thực đơn"
+            android:id="@+id/checkBoxThemVaoThucDon"
+            android:checked="true" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:measureWithLargestChild="false">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm món"
+                android:id="@+id/btnThemMon"
+                android:padding="10dp"
+                android:textColor="#FFFF"
+                android:background="@color/colorButtonLogin"
+                android:textSize="15sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thoát"
+                android:id="@+id/btnThoatThemMon"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="#FFFF"
+                android:background="@color/colorButtonLogin"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

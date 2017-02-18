@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_them_ban_nhanh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dang.ugi.com.view.BanAn.ThemBanNhanh"
+    android:padding="10dp"
+    >
+   <android.support.design.widget.TextInputLayout
+       android:id="@+id/input_layout_soBanThem"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:inputType="number"
+           android:ems="10"
+           android:hint="Điền số bàn muốn thêm"
+           android:id="@+id/editTextSoLuongBanMuonThem"
+           android:gravity="center_vertical|center_horizontal"
+           android:layout_gravity="top|center" />
+   </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="top"
+        android:padding="10dp">
+
+        <Button
+            android:text="Thêm bàn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_themBanNhanh_them"
+            android:layout_gravity="top" />
+
+        <Button
+            android:text="Thoát"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_themBanNhanh_thoat"
+            android:layout_gravity="top" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

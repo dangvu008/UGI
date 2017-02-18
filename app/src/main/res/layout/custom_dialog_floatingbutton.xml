@@ -1,0 +1,141 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rsb="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
+        <RelativeLayout
+            android:id="@+id/layout_goiMon"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textviewGoiMon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gọi món"
+                android:background="@drawable/rounded_egde"
+                android:padding="12dp"
+                android:layout_centerVertical="true"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fb_GoiMon"
+                android:layout_width="@dimen/filter_image"
+                android:layout_height="@dimen/filter_image"
+                android:gravity="bottom"
+                android:layout_toRightOf="@+id/textviewGoiMon"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_add_order"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_themnguoidung"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textviewThemNguoiDung"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm người dùng"
+                android:background="@drawable/rounded_egde"
+                android:padding="12dp"
+                android:layout_centerVertical="true"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fb_themNguoiDung"
+                android:layout_width="@dimen/filter_image"
+                android:layout_height="@dimen/filter_image"
+                android:gravity="bottom"
+                android:layout_toRightOf="@+id/textviewThemNguoiDung"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/add_user"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_themBan"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textviewThemBan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm bàn"
+                android:background="@drawable/rounded_egde"
+                android:padding="12dp"
+                android:layout_centerVertical="true"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fb_themBan"
+                android:layout_width="@dimen/filter_image"
+                android:layout_height="@dimen/filter_image"
+                android:gravity="bottom"
+                android:layout_toRightOf="@+id/textviewThemBan"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_add_table"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_themMon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/textviewThemMon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm món"
+                android:background="@drawable/rounded_egde"
+                android:padding="12dp"
+                android:layout_centerVertical="true"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fb_themMon"
+                android:layout_width="@dimen/filter_image"
+                android:layout_height="@dimen/filter_image"
+                android:gravity="bottom"
+                android:layout_toRightOf="@+id/textviewThemMon"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_add_glass"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cross"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fb_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="bottom"
+                android:layout_marginRight="@dimen/cross_margin"
+
+                android:src="@drawable/ic_close"
+                app:borderWidth="0dp"
+                 />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

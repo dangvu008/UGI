@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item_menu_list_goimon_chitiet" android:title="Chi tiết"/>
+<item android:id="@+id/item_menu_list_goimon_goimon" android:title="@string/goimon"></item>
+    <item android:id="@+id/item_menu_list_goimon_thanhtoan" android:title="@string/thanhtoan"/>
+    <item android:id="@+id/item_menu_list_goimon_chuyenBan" android:title="@string/chuyenban"/>
+    <item android:id="@+id/item_menu_list_goimon_huy" android:title="@string/huy"/>
+</menu>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item android:title="Search" android:icon="@drawable/ic_search" android:id="@+id/item_menu_toolbar_search"
+        android:actionViewClass="android.support.v7.widget.SearchView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+       app:showAsAction="always"/>
+    <item android:title="Search" android:icon="@drawable/ic_autorenew" android:id="@+id/item_menu_toolbar_refesh"
+        app:showAsAction="always"/>
+    <item android:icon="@drawable/ic_more_vert" android:title="menu_item" app:showAsAction="always"
+     android:id="@+id/item_menu_toolbar_hideMenu">
+        <menu xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+            <item android:id="@+id/item_menu_tenNguoiDung" android:title="Ten nguoi dung"
+                android:icon="@drawable/ic_sentiment_very_satisfied"/>
+                <item android:title="Logout" android:id="@+id/item_menu_dangxuat"
+                    android:icon="@drawable/ic_power_settings_new"/>
+                    />
+        </menu>
+    </item>
+</menu>

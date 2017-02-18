@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="id_loader">1</integer>
+    <integer name="request_code_goimon_themmon">13</integer>
+    <integer name="request_code_goimon_suagoimon">14</integer>
+    <integer name="request_code_goimon_thanhtoan">15</integer>
+    <integer name="request_code_goimon_chitietgoimon">16</integer>
+    <integer name="request_code_goimon_goimonmoi">17</integer>
+    <integer name="request_code_goimon_chuyenban">18</integer>
+</resources>

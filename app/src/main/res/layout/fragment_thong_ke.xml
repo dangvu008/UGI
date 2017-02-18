@@ -1,0 +1,77 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dang.ugi.com.view.ThongKe.FragmentThongKe">
+
+    <LinearLayout
+        android:id="@+id/layout_thongke_tonguan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_gravity="center_horizontal">
+
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <TextView
+              android:text="Hôm nay"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/textView4"
+              android:padding="10dp" />
+
+          <TextView
+              android:text="12/12/2016"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/textView_thongke_ngay"
+              android:padding="10dp" />
+      </LinearLayout>
+
+        <TextView
+            android:text="200000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_thongke_doanhthu_homnay"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:text="Doanh thu tháng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:padding="10dp" />
+
+        <TextView
+            android:text="5000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_thongke_doanhthuthang"
+            android:padding="10dp"
+            android:textStyle="normal|bold"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="Doanh thu năm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView12"
+            android:padding="10dp" />
+
+        <TextView
+            android:text="200000000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_thongke_doanhthunam"
+            android:padding="10dp"
+            android:textStyle="normal|bold"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_thanh_toan_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="dang.ugi.com.view.GoiMon.ThanhToanDialog"
+    android:padding="10dp"
+    android:gravity="center_horizontal">
+
+
+    <TextView
+        android:text="@string/tinhtien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+
+        android:textStyle="normal|bold|italic"
+        android:textAllCaps="true"
+        android:textSize="18sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/textView_dialog_thanhtoan_magoimon"
+        android:textSize="1sp"
+        android:textColor="@color/cardview_light_background" />
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_dialog_thanhtoan_tenBan"
+        android:textSize="15sp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_marginTop="16dp"
+        android:id="@+id/editText_thanhtoan_tienphatsinh"
+        android:hint="@string/tienPhatSinh"
+        android:layout_below="@+id/textView_dialog_thanhtoan_tenban"
+        android:layout_alignLeft="@+id/editText_thanhtoan_tongtien"
+        android:layout_alignStart="@+id/editText_thanhtoan_tongtien"
+        android:maxLength="10" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_marginTop="15dp"
+        android:id="@+id/editText_thanhtoan_tongtien"
+        android:enabled="false"
+        android:hint="@string/tongtien"
+     />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_marginTop="18dp"
+        android:id="@+id/editText_thanhtoan_tienmat"
+        android:hint="@string/tienmat"
+        android:layout_centerHorizontal="true"
+        android:maxLength="10" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="@string/tienthoilai"
+        android:id="@+id/editText_thanhtoan_tienthua"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:hint="@string/GhiChu"
+        android:id="@+id/editText_thanhtoan_ghichu"
+        android:layout_centerVertical="true"
+      />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp">
+        <Button
+            android:text="@string/thoat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_dialog_thanhtoan_thoat"
+            android:background="@color/colorButtonLogin"
+            android:textColor="@color/cardview_light_background"
+           />
+
+        <Button
+            android:text="@string/xacNhan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_dialog_thanhtoan_xacnhan"
+            android:background="@color/colorManHinhChao"
+            android:textColor="@color/cardview_light_background"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+</LinearLayout>

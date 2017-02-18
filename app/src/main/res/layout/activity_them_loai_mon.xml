@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_themLoaiMon"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="dang.ugi.com.view.MonAn.ThemLoaiMonActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:id="@+id/validate_layout_TenLoaiMon">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Nhập Tên Loại Món"
+                android:ems="10"
+                android:id="@+id/editTextTenLoaiMon"
+                android:padding="15dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_ThemLoaiMon_thoat"
+            android:text="Thoát"
+            android:background="@color/color_button_thoat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="46dp"
+            android:layout_below="@+id/validate_layout_TenLoaiMon"
+            android:layout_toRightOf="@+id/btnThemLoaiMon"
+            android:layout_toEndOf="@+id/btnThemLoaiMon" />
+
+        <Button
+            android:id="@+id/btnThemLoaiMon"
+            android:text="Thêm Loại Món"
+            android:background="@color/colorButtonLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="79dp"
+            android:layout_marginStart="79dp"
+            android:layout_alignBaseline="@+id/btn_ThemLoaiMon_thoat"
+            android:layout_alignBottom="@+id/btn_ThemLoaiMon_thoat"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:padding="5dp" />
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

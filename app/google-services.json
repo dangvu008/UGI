@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "494997825728",
+    "project_id": "firebase-ugin"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494997825728:android:6bd00ad32db0ee1d",
+        "android_client_info": {
+          "package_name": "dang.ugi.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494997825728-1lib1v616hk8vg8mc62qbok0a619mc80.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dang.ugi.com",
+            "certificate_hash": "2D57F7BB757B6054A2C5041C99090B16320AC7E0"
+          }
+        },
+        {
+          "client_id": "494997825728-9mvlpevvgcthi81ch1fnrctin8d7dioo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF5rsBwxSHQg5HjRuRmR76YJW2iFuGnAA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

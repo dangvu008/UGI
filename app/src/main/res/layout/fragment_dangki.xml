@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_dangki"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isScrollContainer="false"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_layout_TenNguoiDung"
+                >
+                <dang.ugi.com.customView.customEdittextEmail
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_TenNguoiDung"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:hint="Tên Người dùng"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/colorTextHint"
+                    android:padding="10dp"
+                    style="?android:attr/editTextStyle"
+                    android:textCursorDrawable="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+            <RadioGroup
+                android:id="@+id/grbGioiTinh"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+                <RadioButton
+                    android:id="@+id/rbNam"
+                    android:text="Nam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/rbNu"
+                    android:text="Nữ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
+            </RadioGroup>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textview_dangki_ngaysinh"
+                    android:text="20/10/2010"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:padding="10dp" />
+                <Button
+                    android:id="@+id/btn_dangky_chonngaysinh"
+                    android:layout_width="wrap_content"
+                    android:text="Ngay sinh"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_layout_Email">
+                <dang.ugi.com.customView.customEdittextEmail
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_email"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:hint="Email"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/colorTextHint"
+                    android:padding="10dp" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_layout_SoDienThoai"
+                >
+                <dang.ugi.com.customView.customEdittextEmail
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_SoDienThoai"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:hint="Số điện thoại"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/colorTextHint"
+                    android:padding="10dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_matkhau"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <dang.ugi.com.customView.customEditTextPassword
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/editMatKhau"
+                    android:layout_marginTop="5dp"
+                    android:hint="Mật Khẩu"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/colorTextHint"
+                    app:useStrike="true"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_NhapLaiMatKhau"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <dang.ugi.com.customView.customEditTextPassword
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/editNhapLaiMatKhau"
+                    android:layout_marginTop="5dp"
+                    android:hint="Nhập lại Mật Khẩu"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/colorTextHint"
+                    app:useStrike="true"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerPhanQuyen"
+                android:padding="3dp"
+                android:layout_marginTop="5dp"
+                android:dropDownWidth="fill_parent" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hoạt động"
+                android:id="@+id/checkBoxTinhTrang"
+                android:layout_marginTop="5dp" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chophepdangnhap"
+                android:id="@+id/checkBoxChophepDangNhap"
+                android:layout_marginTop="5dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:measureWithLargestChild="false">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng kí"
+                    android:id="@+id/btnDangKi"
+                    android:padding="10dp"
+                    android:textColor="#FFFF"
+                    android:background="@color/colorButtonLogin"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thoát"
+                    android:id="@+id/btnThoatDK"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#FFFF"
+                    android:background="@color/colorButtonLogin"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

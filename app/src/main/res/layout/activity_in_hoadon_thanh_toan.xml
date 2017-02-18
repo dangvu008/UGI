@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_thanh_toan"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="dang.ugi.com.view.GoiMon.ThanhToanActivity">
+
+    <TextView
+        android:text="Bằng chữ :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTongTienBangChu"
+        android:layout_marginTop="13dp"
+        android:id="@+id/textView8"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="No :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView"
+        android:id="@+id/textView10"
+        android:layout_alignTop="@+id/textViewMaSoThanhToan"
+        android:layout_marginRight="10dp" />
+
+    <Button
+        android:text="In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_thanhtoan_In"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textViewTongTienBangChu"
+        android:layout_toEndOf="@+id/textViewTongTienBangChu"
+        android:layout_marginRight="10dp"
+        android:padding="5dp"
+        android:background="@color/colorManHinhChao"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:textColor="@color/cardview_light_background" />
+
+    <Button
+        android:text="@string/thoat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_thanhtoan_thoat"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textViewTenNhanVien"
+        android:layout_toEndOf="@+id/textViewTenNhanVien"
+        android:layout_marginStart="16dp"
+        android:padding="5dp"
+        android:background="@color/colorButtonLogin"
+        android:textColor="@color/cardview_light_background" />
+
+    <TextView
+        android:text="@string/tongtien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:id="@+id/textViewTongTienBangChu"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:layout_below="@+id/textViewTongTienLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="VAT 10%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTongTienLabel"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/recyclerView_thanhtoan_list_mon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="57dp" />
+
+    <TextView
+        android:text="@string/tienPhatSinh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_hoadon_tienphatsinhlabel"
+        android:layout_alignBaseline="@+id/textView_hoadon_tienphatsinh"
+        android:layout_alignBottom="@+id/textView_hoadon_tienphatsinh"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTenNhanVien"
+        android:singleLine="true"
+        android:textStyle="normal|bold"
+        android:layout_alignBaseline="@+id/textView8"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_alignLeft="@+id/textView_hoadon_tongtien"
+        android:layout_alignStart="@+id/textView_hoadon_tongtien" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_hoadon_tienphatsinh"
+        android:layout_marginBottom="11dp"
+        android:layout_above="@+id/textView_hoadon_vat"
+        android:layout_alignRight="@+id/textView_hoadon_vat"
+        android:layout_alignEnd="@+id/textView_hoadon_vat" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_hoadon_vat"
+        android:textStyle="normal|bold"
+        android:singleLine="true"
+        android:layout_above="@+id/textViewTongTienBangChu"
+        android:layout_toRightOf="@+id/textView_hoadon_tienphatsinhlabel"
+        android:layout_toEndOf="@+id/textView_hoadon_tienphatsinhlabel"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_hoadon_tongtien"
+        android:layout_above="@+id/textView8"
+        android:layout_alignLeft="@+id/textView_hoadon_vat"
+        android:layout_alignStart="@+id/textView_hoadon_vat"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="@string/donvitien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTongTienDonVi"
+        android:textStyle="normal|bold"
+        android:singleLine="true"
+        android:layout_alignBaseline="@+id/textView_hoadon_vat"
+        android:layout_alignBottom="@+id/textView_hoadon_vat"
+        android:layout_alignRight="@+id/textView10"
+        android:layout_alignEnd="@+id/textView10" />
+
+    <TextView
+        android:text="cua hang ugi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewTenCuaHang"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textStyle="normal|bold|italic"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Hóa Đơn Thanh Toán"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:textAllCaps="true"
+        android:gravity="center"
+        style="@android:style/Widget.DeviceDefault.TextView"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/textViewTenCuaHang"
+        android:layout_toRightOf="@+id/textView8"
+        android:layout_toEndOf="@+id/textView8" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewMaSoThanhToan"
+        android:layout_below="@+id/textView"
+        android:layout_toRightOf="@+id/textView10"
+        android:layout_toEndOf="@+id/textView10"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_hoadon_tenBan"
+        android:layout_below="@+id/textView10"
+        android:layout_toLeftOf="@+id/textViewTenCuaHang"
+        android:layout_toStartOf="@+id/textViewTenCuaHang" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerView_thanhtoan_list_mon"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/textView15"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Nhân Viên :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView16"
+        android:layout_below="@+id/textView_hoadon_tenBan"
+        android:layout_alignLeft="@+id/textView_hoadon_tenBan"
+        android:layout_alignStart="@+id/textView_hoadon_tenBan" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView17"
+        android:layout_below="@+id/textView16"
+        android:layout_alignLeft="@+id/textView16"
+        android:layout_alignStart="@+id/textView16" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView15"
+        android:layout_alignBaseline="@+id/textView16"
+        android:layout_alignBottom="@+id/textView16"
+        android:layout_alignRight="@+id/button_thanhtoan_In"
+        android:layout_alignEnd="@+id/button_thanhtoan_In" />
+
+    <TextView
+        android:text="VNĐ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView_hoadon_tongtien"
+        android:layout_alignLeft="@+id/textView10"
+        android:layout_alignStart="@+id/textView10"
+        android:id="@+id/textView6"
+        android:textStyle="normal|bold" />
+</RelativeLayout>

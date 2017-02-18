@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_chuyen_ban"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="dang.ugi.com.view.GoiMon.ChuyenBanActivity">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_validate_chuyenban_autocomplete_TenBan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <AutoCompleteTextView
+            android:hint="Bàn cần chuyển"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/autocomplete_chuyenban_tenban"
+            android:imeOptions="actionSearch"
+            style="@android:style/Widget.Holo.AutoCompleteTextView"
+            android:popupBackground="@color/colorPrimary"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:dropDownHeight="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical|center"
+            android:layout_gravity="center" />
+    </android.support.design.widget.TextInputLayout>
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center">
+      <Button
+          android:id="@+id/btn_chuyenban_chuyenban"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/chuyenban"
+          android:layout_below="@+id/layout_validate_goimon_autocomplete_TenBan"
+          android:background="@color/colorPrimary"
+          android:textColor="@color/cardview_light_background"
+          android:layout_marginRight="10dp"
+          android:padding="5dp" />
+      <Button
+          android:id="@+id/btn_chuyenban_thoat"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/thoat"
+          android:layout_below="@+id/layout_validate_goimon_autocomplete_TenBan"
+          android:background="@color/colorButtonLogin"
+
+          android:textColor="@color/cardview_light_background"
+          android:padding="5dp" />
+  </LinearLayout>
+</LinearLayout>

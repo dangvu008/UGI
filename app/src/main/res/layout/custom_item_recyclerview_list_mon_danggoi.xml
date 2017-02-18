@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cardview_item_goiMon_monAn"
+    style="@style/CardView.Light">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView_item_goimon_hinhanhmon"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/textview_item_goimon_gia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2000"
+                android:textColor="@color/colorButtonLogin"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:id="@+id/textview_item_goimon_tenMon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="mon a"
+                android:textStyle="normal|bold"
+                android:textSize="16sp"
+                android:layout_margin="5dp"
+                android:textColor="@color/colorPrimary" />
+            <TextView
+                android:id="@+id/textview_item_goimon_soluong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:layout_margin="5dp" />
+            <TextView
+                android:id="@+id/textview_item_goimon_thanhtien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500000"
+                android:textStyle="normal|italic"
+                android:layout_margin="5dp"
+                android:textColor="@color/colorButtonLoginGoogle" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView_item_goimon_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_more_vert"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
