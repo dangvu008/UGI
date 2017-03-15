@@ -2,6 +2,7 @@ package dang.ugi.com.view.NguoiDung;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +30,9 @@ public class DangNhapActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
+        implPresenterDangNhap = new ImplNguoiDungPresenter(this);
+        StrictMode.setVmPolicy (new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
+                .penaltyDeath().build());
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -48,5 +51,11 @@ public class DangNhapActivity extends AppCompatActivity {
 
 
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
     }
 }

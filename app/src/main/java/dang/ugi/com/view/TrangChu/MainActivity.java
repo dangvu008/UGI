@@ -33,6 +33,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.FacebookSdk;
 
 import dang.ugi.com.R;
+import dang.ugi.com.model.Entities.NguoiDung;
 import dang.ugi.com.model.Utils.CircleTransform;
 import dang.ugi.com.model.Utils.PrefDangNhap;
 import dang.ugi.com.model.Utils.PrefNhaHang;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static int itemCheckedId;
     private String title_fragment[];
     private String tenCuaHang;
+    NguoiDung nguoiDung;
     public MainActivity() {
     }
 
@@ -116,19 +118,25 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         loadHeaderNavigation();
         setupNavigationView();
         loadBarAction();
+        nguoiDung =PrefDangNhap.layNguoiDungHienTai(this);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-       tenCuaHang = PrefNhaHang.layCuaHangHienTai(this).getTenCuahang();
+
             if (savedInstanceState == null) {
                 itemCheckedId = 2;
                 TAG_CURRENT = TAG_BAN;
                 loadHomeFragment();
             }
-
-        if (PrefDangNhap.layNguoiDungHienTai(this).getMaQuyen() != 1) {
-            anItemNavigation();
+        if (PrefNhaHang.layCuaHangHienTai(this)!=null && nguoiDung!=null) {
+            tenCuaHang = PrefNhaHang.layCuaHangHienTai(this).getTenCuahang();
+            if (nguoiDung.getMaQuyen() != 1) {
+                anItemNavigation();
+            }
+        }else{
+            implPresenterDangNhap.chuyenManHinhDanhNhap(MainActivity.this);
         }
+
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
                 .penaltyDeath().build());
 
@@ -197,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private void loadBarAction() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
     }
 
     private void setupNavigationView() {
@@ -447,7 +455,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             
         });
-        item_ten.setTitle(PrefDangNhap.layNguoiDungHienTai(this).getTenNguoiDung());
+        if (nguoiDung!=null)
+            item_ten.setTitle(nguoiDung.getTenNguoiDung());
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item_search);
         searchView.setOnQueryTextListener(this);
         MenuItemCompat.setOnActionExpandListener(item_search, new MenuItemCompat.OnActionExpandListener() {
@@ -516,8 +525,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onQueryTextChange(final String s) {
         Fragment fragment = getFragmentHome();
-        bundle.putString("keySearch", s);
-        fragment.setArguments(bundle);
+        Bundle bundlek = new Bundle();
+        bundlek.putString("keySearch", s);
+        fragment.setArguments(bundlek);
         loadFragment(fragment);
         return false;
     }

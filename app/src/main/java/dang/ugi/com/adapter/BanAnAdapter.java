@@ -25,7 +25,9 @@ import dang.ugi.com.asyntask.LoadBanAsynTask;
 import dang.ugi.com.asyntask.LoadGoiMonAsynTask;
 import dang.ugi.com.R;
 import dang.ugi.com.model.Entities.BanAn;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.GoiMon;
+import dang.ugi.com.model.Entities.NguoiDung;
 import dang.ugi.com.model.Utils.PrefDangNhap;
 import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.model.Utils.Static_Id;
@@ -62,8 +64,12 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
         implPresenterBanAn = new ImplPresenterBanAn(context);
         implGoiMonPresenter = new ImplGoiMonPresenter(context);
         chiTietGoiMonPresenter = new ImplChiTietGoiMonPresenter(context);
-        maCuaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
-        maNguoiDung = PrefDangNhap.layNguoiDungHienTai(context).getMaNguoiDung();
+        CuaHang cuaHangHT =PrefNhaHang.layCuaHangHienTai(context);
+        NguoiDung nguoiDung = PrefDangNhap.layNguoiDungHienTai(context);
+        if (cuaHangHT!=null)
+            maCuaHang = cuaHangHT.getMaCuaHang();
+        if (nguoiDung!=null)
+            maNguoiDung = nguoiDung.getMaNguoiDung();
     }
 
     @Override

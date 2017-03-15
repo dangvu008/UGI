@@ -16,6 +16,7 @@ import java.util.List;
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.BanAnAdapter;
 import dang.ugi.com.model.Entities.BanAn;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Utils.GridSpacingItemDecoration;
 import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.presenter.BanAn.ImplPresenterBanAn;
@@ -35,7 +36,9 @@ public class LoadBanAsynTask extends AsyncTask<String,List<BanAn>,List<BanAn>>{
     public LoadBanAsynTask(Context context,View view) {
         this.context = context;
         this.view = view;
-        maCuaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
+        CuaHang cuaHangHT = PrefNhaHang.layCuaHangHienTai(context);
+        if (cuaHangHT!=null)
+            maCuaHang = cuaHangHT.getMaCuaHang();
         implPresenterBanAn = new ImplPresenterBanAn(context);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyerView_banAn_main);
     }
@@ -73,8 +76,8 @@ public class LoadBanAsynTask extends AsyncTask<String,List<BanAn>,List<BanAn>>{
     @Override
     protected void onProgressUpdate(List<BanAn>... values) {
         super.onProgressUpdate(values);
-        listBanAn = values[0];
-        loadDataToRecyerView(listBanAn);
+        List<BanAn> list = values[0];
+        loadDataToRecyerView(list);
     }
 
     @Override

@@ -2,7 +2,6 @@ package dang.ugi.com.presenter.NguoiDung;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +52,7 @@ public class ImplNguoiDungPresenter implements INguoiDungPresenter {
     Intent intent;
     int id;
     CuaHang cuaHang;
+    AlertDialog alertDialog;
     public static final int REQUEST_CODE_DANGNHAP = 1;
 
     public ImplNguoiDungPresenter(Context context) {
@@ -150,69 +150,24 @@ public class ImplNguoiDungPresenter implements INguoiDungPresenter {
     @Override
     public void chuyenManHinhChinh() {
         nguoiDungdk = PrefDangNhap.layNguoiDungHienTai(context);
-        List<CuaHang> listCuaHang = impCuaHangDatabaseHandler.layToanBoCuaHang(nguoiDungdk.getMaNguoiDung());
-        if (listCuaHang.size() != 0) {
-            CuaHang cuaHang = listCuaHang.get(0);
-            if (PrefNhaHang.layCuaHangHienTai(context) == null) {
-                PrefNhaHang.themCuaHangHienTai(cuaHang, context);
-            }
-            intent = new Intent(context, MainActivity.class);
-
-        } else {
-            intent = new Intent(context, ThemCuaHangActivity.class);
-        }
-
+        intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
 
-    public void dangkimoi(NguoiDung nguoiDung) {
-        nguoiDungdk = nguoiDung;
-         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("thiết lập nhà hàng mới !");
-        builder.setMessage("Bạn có muốn bắt đầu thiết lập nhà hàng của bạn không ?");
-        builder.setNegativeButton("Không ", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (nguoiDungdk != null) {
-                    int lastIdCh;
-                    int lastIdNd;
-                    if (cuaHangCuoi!=null){
-                        lastIdCh = lastIdCuaHang().getId()+1;
-                    }else{
-                        lastIdCh = 1;
-                    }
-                    if (nguoiDungCuoi!=null){
-                        lastIdNd = lastIdNguoiDung().getId() +1;
-                    }else{
-                        lastIdNd = 1;
-                    }
 
-                    String strId = String.valueOf(lastIdCh)+String.valueOf(lastIdNd);
-                    int maNguoidung = Integer.parseInt(strId);
-                    nguoiDungdk.setMaQuyen(1);
-                    nguoiDungdk.setAllowLogin(1);
-                    nguoiDungdk.setMaNguoiDung(maNguoidung);
-                     if (themNguoiDungtoServer(nguoiDungdk)){
-                         themDuLieuNguoiDung(nguoiDungdk);
-                         if (PrefDangNhap.layNguoiDungHienTai(context) == null) {
-                             PrefDangNhap.themNguoiDungHienTai(nguoiDungdk, context);
-                             Intent intentdk = new Intent(context, ThemCuaHangActivity.class);
-                             intentdk.putExtra("maCuaHang",lastIdCh);
-                             context.startActivity(intentdk);
-                         }
-                     }
-                    }
-            }
-        });
-            builder.show();
+    public int dangkymoinguoidung(NguoiDung nguoiDungdk){
+        nguoiDungdk.setMaQuyen(1);
+        nguoiDungdk.setAllowLogin(1);
+          return (int) themDuLieuNguoiDung(nguoiDungdk);
+
+        //}
     }
-
+    public void chuyenThemCuaHang(int lastIdCh){
+        int lastId = lastIdCh+1;
+        Intent intentdk = new Intent(context, ThemCuaHangActivity.class);
+        intentdk.putExtra("maCuaHang",lastId);
+        context.startActivity(intentdk);
+    }
     private boolean ketqua;
     private NguoiDung nguoiDungCuoi;
     public NguoiDung lastIdNguoiDung(){

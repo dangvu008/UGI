@@ -1,9 +1,11 @@
 package dang.ugi.com.view.NguoiDung;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -49,12 +51,15 @@ import dang.ugi.com.R;
 import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.NguoiDung;
 import dang.ugi.com.model.Utils.PrefDangNhap;
+import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.network.NguoiDung.ConstantsNguoiDung;
+import dang.ugi.com.network.NguoiDung.RequestInterfaceNguoiDung;
 import dang.ugi.com.network.NguoiDung.ServerRequestNguoiDung;
 import dang.ugi.com.network.NguoiDung.ServerResponseNguoiDung;
-import dang.ugi.com.network.NguoiDung.RequestInterfaceNguoiDung;
 import dang.ugi.com.network.RetrofitHandler;
+import dang.ugi.com.presenter.CuaHang.ImpPresenterCuaHang;
 import dang.ugi.com.presenter.NguoiDung.ImplNguoiDungPresenter;
+import dang.ugi.com.view.CuaHang.ThemCuaHangActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,8 +77,10 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     ProgressDialog progressDialog;
     CallbackManager callbackManager;
     ImplNguoiDungPresenter implPresenterDangNhap;
+    ImpPresenterCuaHang impPresenterCuaHang;
     NguoiDung nguoiDung;
     CuaHang cuaHang;
+    int lastIdCuaHang, maNguoiDung;
     public static final int RESULT_CODE_DANGNHAP_FB_THANHCONG = 2 ;
     public static final int REQUEST_CODE_DANGNHAP_GG = 3 ;
     private GoogleApiClient mGoogleApiClient;
@@ -81,13 +88,16 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     private AccessTokenTracker accessTokenTracker;
     private AccessToken accessToken;
     private int allowlogin = -1;
+    private AlertDialog alertDialog;
+
     public FragmentDangNhap() {
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        StrictMode.setVmPolicy (new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
+                .penaltyDeath().build());
     }
     @Nullable
     @Override
@@ -105,6 +115,8 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         btnLogin.setOnClickListener(this);
         dangNhapFacebook();
         mGoogleApiClient = layGoogleApiClient();
+        StrictMode.setVmPolicy (new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
+                .penaltyDeath().build());
         return view;
     }
 
@@ -126,20 +138,63 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
          if (requestCode ==REQUEST_CODE_DANGNHAP_GG && resultCode== Activity.RESULT_OK){
              GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
              layNguoiDungHientai(result);
-             NguoiDung nguoiDungDK = checkAllowLoginSoccial(nguoiDung);
-             CuaHang cuahang = checkNguoiDungCuaHang(nguoiDung);
-             if (nguoiDungDK==null && cuahang==null){
-                 implPresenterDangNhap.dangkimoi(nguoiDung);
+             final NguoiDung nguoiDungDK = checkAllowLoginSoccial(nguoiDung);
+             final CuaHang cuahangHT = checkNguoiDungCuaHang(nguoiDung);
+
+             NguoiDung lastNguoiDung = implPresenterDangNhap.lastIdNguoiDung();
+             if (lastNguoiDung!=null){
+                 maNguoiDung = (lastNguoiDung.getMaNguoiDung()+1);
+             }else{
+                 maNguoiDung = 1;
+             }
+             if (nguoiDungDK==null){
+                 nguoiDung.setMaNguoiDung(maNguoiDung);
+                if ( implPresenterDangNhap.dangkymoinguoidung(nguoiDung)>0){
+                    if(PrefDangNhap.layNguoiDungHienTai(getActivity())==null) {
+                        PrefDangNhap.themNguoiDungHienTai(nguoiDung,getActivity());
+                    }
+                    CuaHang chht = PrefNhaHang.layCuaHangHienTai(getActivity());
+                    if (chht!=null){
+                        if (impPresenterCuaHang.themCuaHangNguoiDung(chht.getMaCuaHang(),nguoiDungDK.getMaNguoiDung())>0){
+                            Toast.makeText(getActivity(), "Success !", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(getActivity(), "Faild !", Toast.LENGTH_SHORT).show();
+                        }
+                        getActivity().finish();
+                    }else{
+                        if (cuahangHT==null){
+                            implPresenterDangNhap.chuyenThemCuaHang(lastIdCuaHang);
+                        }else{
+                            implPresenterDangNhap.chuyenManHinhChinh();
+                        }
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "Faild !", Toast.LENGTH_SHORT).show();
+                }
+
              }else {
                 if(PrefDangNhap.layNguoiDungHienTai(getActivity())==null) {
                     PrefDangNhap.themNguoiDungHienTai(nguoiDung,getActivity());
                 }
-                 implPresenterDangNhap.chuyenManHinhChinh();
+               if (cuahangHT!=null)
+                   implPresenterDangNhap.chuyenManHinhChinh();
+                 else {
+                   Intent intentdk = new Intent(getActivity(), ThemCuaHangActivity.class);
+                   getActivity().startActivity(intentdk);
+               }
              }
          }
 
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+       if (alertDialog!=null)
+           alertDialog.dismiss();
+    }
+
     public GoogleApiClient layGoogleApiClient(){
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -198,7 +253,6 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
                 if (response.isSuccessful()) {
                      nguoidungSocial = response.body().getNguoiDung();
                 }
-                getActivity().finish();
             }
 
             @Override

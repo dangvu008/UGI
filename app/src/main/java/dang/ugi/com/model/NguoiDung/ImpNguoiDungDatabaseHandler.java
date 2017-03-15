@@ -42,6 +42,7 @@ public class ImpNguoiDungDatabaseHandler implements INguoiDungDatabaseHandler {
             values.put(UgiDatabase.COLUMN_NGUOIDUNG_SDT,nguoiDung.getSoDienThoai());
             values.put(UgiDatabase.COLUMN_NGUOIDUNG_TINHTRANG,1);
             values.put(UgiDatabase.COLUMN_MAQUYEN,nguoiDung.getMaQuyen());
+            values.put(UgiDatabase.COLUMN_NGUOIDUNG_ALLOWLOGIN,nguoiDung.getAllowLogin());
             values.put(UgiDatabase.COLUMN_NGUOIDUNG_SYNC,nguoiDung.getSync());
             ketqua =database.insert(UgiDatabase.TABLE_NGUOIDUNG,null,values);
         }catch (Exception ex){}

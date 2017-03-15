@@ -30,6 +30,7 @@ import dang.ugi.com.network.CuaHang.ServerRequestCuaHang;
 import dang.ugi.com.network.CuaHang.ServerResponseCuaHang;
 import dang.ugi.com.network.RetrofitHandler;
 import dang.ugi.com.presenter.CuaHang.ImpPresenterCuaHang;
+import dang.ugi.com.presenter.NguoiDung.ImplNguoiDungPresenter;
 import dang.ugi.com.view.TrangChu.MainActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,11 +54,14 @@ public class ThemCuaHangActivity extends AppCompatActivity implements View.OnCli
     int maLoaiCuaHang = 0  ;
     boolean ketqua;
     Intent intent;
+    private ImplNguoiDungPresenter implPresenterDangNhap;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_cua_hang);
         impPresenterCuaHang = new ImpPresenterCuaHang(this);
+        implPresenterDangNhap = new ImplNguoiDungPresenter(this);
         addViews();
         addEvents();
         intent = getIntent();
@@ -151,9 +155,13 @@ public class ThemCuaHangActivity extends AppCompatActivity implements View.OnCli
     private void luuCuaHang() {
         if (!validateTenCuaHang()){
             int maCuahang = 0;
-            if (intent.hasExtra("maCuaHang")){
-                maCuahang = intent.getIntExtra("maCuaHang",0) +1;
+            CuaHang lastCuaHang = implPresenterDangNhap.lastIdCuaHang();
+            if (lastCuaHang!=null)
+                maCuahang  =lastCuaHang.getMaCuaHang() +1;
+            else{
+                maCuahang =1;
             }
+
             String tenCuahang= editTextTenCuaHang.getText().toString();
             String diaChi = editTextDiaChi.getText().toString();
             String sodienthoai = editTextSDT.getText().toString();
@@ -166,9 +174,9 @@ public class ThemCuaHangActivity extends AppCompatActivity implements View.OnCli
             cuaHang.setLogo(duongdanLogo);
             cuaHang.setMaCuaHang(maCuahang);
             int maCuaHangInserted = (int) impPresenterCuaHang.themCuaHang(cuaHang);
-            themCuaHangToSerVer(cuaHang);
+           // themCuaHangToSerVer(cuaHang);
             if (maCuaHangInserted!=-1){
-                impPresenterCuaHang.themCuaHangNguoiDung(maCuaHangInserted, PrefDangNhap.layNguoiDungHienTai(this).getMaNguoiDung());
+                impPresenterCuaHang.themCuaHangNguoiDung(maCuahang, PrefDangNhap.layNguoiDungHienTai(this).getMaNguoiDung());
                 setResult(RESULT_OK);
                 cuaHang.setMaCuaHang(maCuaHangInserted);
                 PrefNhaHang.themCuaHangHienTai(cuaHang,this);

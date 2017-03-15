@@ -209,7 +209,7 @@ public class FragmentDangki extends Fragment implements View.OnClickListener {
                     getActivity().startActivity(intent);
                 }else{
                     PrefDangNhap.themNguoiDungHienTai(nguoiDungDK, getActivity());
-                    implPresenterDangNhap.dangkimoi(nguoiDungDK);
+                    implPresenterDangNhap.dangkymoinguoidung(nguoiDungDK);
                 }
             }else{
                 Toast.makeText(getActivity(), "Faild", Toast.LENGTH_SHORT).show();
@@ -241,7 +241,11 @@ public class FragmentDangki extends Fragment implements View.OnClickListener {
         return true;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
 
+    }
 
     private boolean validateSoDienThoai() {
         sodienthoai = editTextSoDienThoai.getText().toString();

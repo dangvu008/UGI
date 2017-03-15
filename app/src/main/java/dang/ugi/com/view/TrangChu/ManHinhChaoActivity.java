@@ -31,7 +31,6 @@ public class ManHinhChaoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_man_hinh_chao);
        layout = (CoordinatorLayout) findViewById(R.id.layout_manhinhchao);
         implPresenterDangNhap = new ImplNguoiDungPresenter(this);
-
          nguoiDungCheck = PrefDangNhap.layNguoiDungHienTai(getApplicationContext());
                 if (nguoiDungCheck!=null){
                     implPresenterDangNhap.chuyenManHinhChinh();
@@ -53,7 +52,7 @@ public class ManHinhChaoActivity extends AppCompatActivity {
             if (kiemTra){
                 implPresenterDangNhap.chuyenManHinhChinh();
             }else{
-                implPresenterDangNhap.dangkimoi(nguoiDung);
+                implPresenterDangNhap.dangkymoinguoidung(nguoiDung);
 
             }
         }

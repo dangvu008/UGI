@@ -32,6 +32,7 @@ public class UgiDatabase {
     public static final String COLUMN_NAMSINH = "NamSinh";
     public static final String COLUMN_NGUOIDUNG_SDT = "SoDienThoai";
     public static final String COLUMN_NGUOIDUNG_TINHTRANG = "TinhTrang";
+    public static final String COLUMN_NGUOIDUNG_ALLOWLOGIN = "AllowLogin";
     public static final String COLUMN_NGUOIDUNG_SYNC = "Sync";
     // colums table monan
     public static final String COLUMN_MONAN_MAMON = "MaMonAn";
@@ -109,6 +110,7 @@ public class UgiDatabase {
             COLUMN_NGUOIDUNG_SDT + " TEXT ," +
             COLUMN_MAQUYEN + " INTEGER NOT NULL," +
             COLUMN_NGUOIDUNG_TINHTRANG + " INTEGER, " +
+            COLUMN_NGUOIDUNG_ALLOWLOGIN + " INTEGER DEFAULT 0, " +
             COLUMN_NGUOIDUNG_SYNC + " INTEGER DEFAULT 0 ) ";
     // MON AN
 

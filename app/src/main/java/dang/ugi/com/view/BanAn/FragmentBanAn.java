@@ -16,6 +16,7 @@ import dang.ugi.com.asyntask.LoadBanAsynTask;
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.BanAnAdapter;
 import dang.ugi.com.model.Entities.BanAn;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.NguoiDung;
 import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.presenter.BanAn.ImplPresenterBanAn;
@@ -34,7 +35,8 @@ public class FragmentBanAn extends Fragment {
     private View view;
     Bundle bundle;
     int maCuaHang;
-    public static final int id_loader= R.integer.id_loader;
+    public static final int id_loader = R.integer.id_loader;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,25 +48,29 @@ public class FragmentBanAn extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_banan,container,false);
+        view = inflater.inflate(R.layout.fragment_banan, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyerView_banAn_main);
         implPresenterBanAn = new ImplPresenterBanAn(getActivity());
-        maCuaHang = PrefNhaHang.layCuaHangHienTai(getActivity()).getMaCuaHang();
-        hasOptionsMenu();
+        CuaHang cuaHangHT = PrefNhaHang.layCuaHangHienTai(getActivity());
+        if (cuaHangHT != null)
+            maCuaHang = cuaHangHT.getMaCuaHang();
         bundle = getArguments();
-        if (bundle!=null){
+        if (bundle != null) {
             String key = bundle.getString("keySearch");
-            new LoadBanAsynTask(getActivity(),view).execute(key);
-        }else{
-            new LoadBanAsynTask(getActivity(),view).execute("");
+            new LoadBanAsynTask(getActivity(), view).execute(key);
+        } else {
+            new LoadBanAsynTask(getActivity(), view).execute("");
         }
         recyclerView.setHasFixedSize(true);
         return view;
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        new LoadBanAsynTask(getActivity(),view).execute("");
+        if (bundle==null){
+            new LoadBanAsynTask(getActivity(), view).execute("");
+        }
         //getLoaderManager().restartLoader(1,null,this);
     }
 

@@ -17,11 +17,14 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".view.TrangChu.MainActivity"  />
+        <activity android:name=".view.TrangChu.MainActivity">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <activity android:name=".view.TrangChu.ManHinhChaoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
