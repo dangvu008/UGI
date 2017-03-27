@@ -60,9 +60,9 @@ public class ThemCuaHangActivity extends AppCompatActivity implements View.OnCli
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_cua_hang);
+        addViews();
         impPresenterCuaHang = new ImpPresenterCuaHang(this);
         implPresenterDangNhap = new ImplNguoiDungPresenter(this);
-        addViews();
         addEvents();
         intent = getIntent();
         if (impPresenterCuaHang.layLoaiCuaHang().size()==0){
@@ -77,6 +77,16 @@ public class ThemCuaHangActivity extends AppCompatActivity implements View.OnCli
         impPresenterCuaHang.themLoaiCuaHang(getString(R.string.QuanTraSua));
         impPresenterCuaHang.themLoaiCuaHang(getString(R.string.QuanNuoc));
         impPresenterCuaHang.themLoaiCuaHang(getString(R.string.QuanKhac));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void loadLoaiCuaHang() {

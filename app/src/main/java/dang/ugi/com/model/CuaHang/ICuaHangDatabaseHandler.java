@@ -20,5 +20,6 @@ public interface ICuaHangDatabaseHandler {
     long themCuaHangNguoiDung(int maCuaHang,int maNguoiDung);
     int  layMaCuaHangByMaNguoiDung(int maNguoiDung);
     int themLoaiCuaHang(String tenLoaiCuaHang);
+    CuaHang checkCuaHangNguoiDung(int maNguoiDung);
     List<LoaiCuaHang> layLoaiCuaHang();
 }

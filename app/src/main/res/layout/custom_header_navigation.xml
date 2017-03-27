@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="190dp"
     android:background="@drawable/header_navigation">
 
     <ImageView
+        android:id="@+id/imageViewLogo"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:srcCompat="@color/colorText"
-        android:id="@+id/imageViewLogo"
         android:layout_gravity="center_vertical|center_horizontal|center"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="50dp"
+        app:srcCompat="@color/colorText" />
 
     <TextView
         android:text="TextView"
@@ -20,5 +21,6 @@
         android:id="@+id/textViewTenCuaHang"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        tools:ignore="HardcodedText" />
 </LinearLayout>

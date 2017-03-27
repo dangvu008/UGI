@@ -67,6 +67,7 @@ public class LoadBanAsynTask extends AsyncTask<String,List<BanAn>,List<BanAn>>{
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPX(5), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(banAnAdapter);
+        banAnAdapter.notifyDataSetChanged();
     }
     public int dpToPX(int dp) {
         Resources resources = context.getResources();

@@ -1,20 +1,29 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="dang.ugi.com.view.ThongKe.ThongKeThangFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textViewThang"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
         android:text="@string/hello_blank_fragment" />
+
+    <Spinner
+        android:id="@+id/spinnerThang"
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"></Spinner>
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barchart_month"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"></com.github.mikephil.charting.charts.BarChart>
 
-</FrameLayout>
+</LinearLayout>

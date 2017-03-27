@@ -28,6 +28,9 @@ public class NguoiDung implements Serializable {
     @SerializedName("GioiTinh")
     @Expose
     private String gioiTinh;
+    @SerializedName("Image")
+    @Expose
+    private String image;
     @SerializedName("NamSinh")
     @Expose
     private String namSinh;
@@ -161,6 +164,14 @@ public class NguoiDung implements Serializable {
 
     public int getAllowLogin() {
         return allowLogin;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setAllowLogin(int allowLogin) {

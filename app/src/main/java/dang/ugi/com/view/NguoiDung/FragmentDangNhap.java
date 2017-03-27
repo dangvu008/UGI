@@ -1,17 +1,16 @@
 package dang.ugi.com.view.NguoiDung;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +40,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,6 +89,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     private AccessToken accessToken;
     private int allowlogin = -1;
     private AlertDialog alertDialog;
+    private ProgressDialog mProgressDialog;
 
     public FragmentDangNhap() {
     }
@@ -96,8 +97,9 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.setVmPolicy (new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
-                .penaltyDeath().build());
+
+
+
     }
     @Nullable
     @Override
@@ -105,98 +107,11 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
         View view = inflater.inflate(R.layout.fragment_dangnhap,container,false);
         ibtnLogin_facebook = (ImageButton) view.findViewById(R.id.ibtnLogin_facebook);
         ibtnLogin_google = (ImageButton) view.findViewById(R.id.ibtnLogin_google);
-        addControls(view);
+       /* addControls(view);
         editTextEmailSdt.addTextChangedListener(new DangNhapTextWatcher(editTextEmailSdt));
-        editTextMatKhau.addTextChangedListener(new DangNhapTextWatcher(editTextMatKhau));
+        editTextMatKhau.addTextChangedListener(new DangNhapTextWatcher(editTextMatKhau));*/
         implPresenterDangNhap = new ImplNguoiDungPresenter(getActivity());
-        ibtnLogin_facebook.setOnClickListener(this);
-        ibtnLogin_google.setOnClickListener(this);
-        tvQuenMatKhau.setOnClickListener(this);
-        btnLogin.setOnClickListener(this);
-        dangNhapFacebook();
-        mGoogleApiClient = layGoogleApiClient();
-        StrictMode.setVmPolicy (new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
-                .penaltyDeath().build());
-        return view;
-    }
-
-
-
-    private void addControls(View view) {
-        editTextEmailSdt = (EditText) view.findViewById(R.id.edit_dangNhap_email);
-        editTextMatKhau = (EditText) view.findViewById(R.id.edit_DangNhap_MatKhau);
-        textInputLayout_Email = (TextInputLayout) view.findViewById(R.id.input_layout_DangNhap_Email);
-        textInputLayoutMatKhau = (TextInputLayout) view.findViewById(R.id.input_layout_dangNhap_matkhau);
-        btnLogin = (Button) view.findViewById(R.id.btnDangNhap);
-        tvQuenMatKhau = (TextView) view.findViewById(R.id.tvQuenMatKhau);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
-         if (requestCode ==REQUEST_CODE_DANGNHAP_GG && resultCode== Activity.RESULT_OK){
-             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-             layNguoiDungHientai(result);
-             final NguoiDung nguoiDungDK = checkAllowLoginSoccial(nguoiDung);
-             final CuaHang cuahangHT = checkNguoiDungCuaHang(nguoiDung);
-
-             NguoiDung lastNguoiDung = implPresenterDangNhap.lastIdNguoiDung();
-             if (lastNguoiDung!=null){
-                 maNguoiDung = (lastNguoiDung.getMaNguoiDung()+1);
-             }else{
-                 maNguoiDung = 1;
-             }
-             if (nguoiDungDK==null){
-                 nguoiDung.setMaNguoiDung(maNguoiDung);
-                if ( implPresenterDangNhap.dangkymoinguoidung(nguoiDung)>0){
-                    if(PrefDangNhap.layNguoiDungHienTai(getActivity())==null) {
-                        PrefDangNhap.themNguoiDungHienTai(nguoiDung,getActivity());
-                    }
-                    CuaHang chht = PrefNhaHang.layCuaHangHienTai(getActivity());
-                    if (chht!=null){
-                        if (impPresenterCuaHang.themCuaHangNguoiDung(chht.getMaCuaHang(),nguoiDungDK.getMaNguoiDung())>0){
-                            Toast.makeText(getActivity(), "Success !", Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(getActivity(), "Faild !", Toast.LENGTH_SHORT).show();
-                        }
-                        getActivity().finish();
-                    }else{
-                        if (cuahangHT==null){
-                            implPresenterDangNhap.chuyenThemCuaHang(lastIdCuaHang);
-                        }else{
-                            implPresenterDangNhap.chuyenManHinhChinh();
-                        }
-                    }
-                }else{
-                    Toast.makeText(getActivity(), "Faild !", Toast.LENGTH_SHORT).show();
-                }
-
-             }else {
-                if(PrefDangNhap.layNguoiDungHienTai(getActivity())==null) {
-                    PrefDangNhap.themNguoiDungHienTai(nguoiDung,getActivity());
-                }
-               if (cuahangHT!=null)
-                   implPresenterDangNhap.chuyenManHinhChinh();
-                 else {
-                   Intent intentdk = new Intent(getActivity(), ThemCuaHangActivity.class);
-                   getActivity().startActivity(intentdk);
-               }
-             }
-         }
-
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-       if (alertDialog!=null)
-           alertDialog.dismiss();
-    }
-
-    public GoogleApiClient layGoogleApiClient(){
-
+        impPresenterCuaHang = new ImpPresenterCuaHang(getActivity());
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -204,28 +119,135 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
                 .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-        return mGoogleApiClient;
+        ibtnLogin_facebook.setOnClickListener(this);
+        ibtnLogin_google.setOnClickListener(this);
+       // tvQuenMatKhau.setOnClickListener(this);
+        //btnLogin.setOnClickListener(this);
+        dangNhapFacebook();
+        StrictMode.setVmPolicy (new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
+                .penaltyDeath().build());
+
+
+        return view;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.gc();
+        System.runFinalization();
+        System.gc();
+    }
+
+
+    /* private void addControls(View view) {
+        editTextEmailSdt = (EditText) view.findViewById(R.id.edit_dangNhap_email);
+        editTextMatKhau = (EditText) view.findViewById(R.id.edit_DangNhap_MatKhau);
+        textInputLayout_Email = (TextInputLayout) view.findViewById(R.id.input_layout_DangNhap_Email);
+        textInputLayoutMatKhau = (TextInputLayout) view.findViewById(R.id.input_layout_dangNhap_matkhau);
+        btnLogin = (Button) view.findViewById(R.id.btnDangNhap);
+        tvQuenMatKhau = (TextView) view.findViewById(R.id.tvQuenMatKhau);
+    }*/
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("requestCode", String.valueOf(requestCode));
+        CuaHang cuahangHT;
+        NguoiDung nguoiDungDK;
+        if (requestCode==REQUEST_CODE_DANGNHAP_GG){
+             showProgressDialog();
+             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+             if (result.isSuccess()){
+               nguoiDung =  layNguoiDungHientai(result);
+             }
+
+         }else{
+             callbackManager.onActivityResult(requestCode,resultCode,data);
+            layThongTinNguoiDungHienTai(accessToken);
+         }
+        nguoiDungDK = implPresenterDangNhap.checkAllowLogin(nguoiDung.getEmail());
+        if (nguoiDungDK!=null){
+            cuahangHT = impPresenterCuaHang.checkCuaHangNguoiDung(nguoiDungDK.getMaNguoiDung());
+            PrefDangNhap.themNguoiDungHienTai(nguoiDung,getActivity());
+            hideProgressDialog();
+            if (cuahangHT!=null){
+                PrefNhaHang.themCuaHangHienTai(cuahangHT,getActivity());
+                implPresenterDangNhap.chuyenManHinhChinh();
+            }else{
+                Intent intentdk = new Intent(getActivity(), ThemCuaHangActivity.class);
+                getActivity().startActivity(intentdk);
+            }
+        }else{
+            int maNguoiDung;
+            int lastId = implPresenterDangNhap.lastIdNguoiDung();
+            maNguoiDung = lastId+1;
+            if (nguoiDung!=null){
+                nguoiDung.setMaNguoiDung(maNguoiDung);
+                nguoiDung.setMaQuyen(1);
+            }
+            if ( implPresenterDangNhap.dangkymoinguoidung(nguoiDung)>0){
+                if(PrefDangNhap.layNguoiDungHienTai(getActivity())==null) {
+                    PrefDangNhap.themNguoiDungHienTai(nguoiDung,getActivity());
+                }
+                    Intent intentdk = new Intent(getActivity(), ThemCuaHangActivity.class);
+                    getActivity().startActivity(intentdk);
+                  hideProgressDialog();
+            }else{
+                hideProgressDialog();
+                Toast.makeText(getActivity(), "Faild !", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mGoogleApiClient!=null)
+            mGoogleApiClient.disconnect();
+       //if (alertDialog!=null)
+         //  alertDialog.dismiss();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mGoogleApiClient.connect();
+    }
+
     private void dangNhapGoogle(){
-        Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(intent,REQUEST_CODE_DANGNHAP_GG);
+       if (internetIsconnected()){
+           Intent intentG = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+           startActivityForResult(intentG,REQUEST_CODE_DANGNHAP_GG);
+       }else{
+           Toast.makeText(getActivity(), "Internet is not connect", Toast.LENGTH_SHORT).show();
+       }
     }
     public  void dangXuatGoogle(){
         Auth.GoogleSignInApi.signOut(mGoogleApiClient);
     }
 
-    private void layNguoiDungHientai(GoogleSignInResult result) {
+    private NguoiDung layNguoiDungHientai(GoogleSignInResult result) {
         if (result.isSuccess()){
             nguoiDung = new NguoiDung();
             GoogleSignInAccount account = result.getSignInAccount();
             nguoiDung.setTenNguoiDung(account.getDisplayName());
             nguoiDung.setEmail(account.getEmail());
+            nguoiDung.setImage(String.valueOf(account.getPhotoUrl()));
+
+        }else{
+            Log.d("result", "faild");
         }
+        return nguoiDung;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        mGoogleApiClient.connect();
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()){
             GoogleSignInResult result = opr.get();
@@ -234,10 +256,39 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(@NonNull GoogleSignInResult result) {
+
                    layNguoiDungHientai(result);
                 }
             });
         }
+    }
+    private void revokeAccess() {
+        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        Toast.makeText(getActivity(),status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    // [END revokeAccess]
+
+
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
+    public boolean internetIsconnected(){
+        boolean isConnect = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getActiveNetworkInfo()!=null &&connectivityManager.getActiveNetworkInfo().isAvailable()
+                &&connectivityManager.getActiveNetworkInfo().isConnected())
+            isConnect=true;
+
+        return isConnect;
+
     }
     NguoiDung nguoidungSocial;
     public NguoiDung checkAllowLoginSoccial(NguoiDung nguoiDung){
@@ -288,24 +339,27 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btnDangNhap :{
+          /*  case R.id.btnDangNhap :{
                 dangNhap();
-            }break;
+            }break;*/
             case R.id.ibtnLogin_facebook :{
                dangnhapFacebook();
             }break;
             case R.id.ibtnLogin_google :{
                 dangNhapGoogle();
             }break;
-            case R.id.tvQuenMatKhau:{
+           /* case R.id.tvQuenMatKhau:{
                 quenMatKhau();
-            }break;
+            }break;*/
 
         }
     }
 
     private void dangnhapFacebook() {
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","name,email,gender"));
+       if (internetIsconnected())
+           LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","name,email,gender"));
+        else
+           Toast.makeText(getActivity(), "internet is not connect", Toast.LENGTH_SHORT).show();
     }
     public void dangNhapFacebook() {
         FacebookSdk.sdkInitialize(getActivity());
@@ -353,10 +407,12 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
                             String tenNguoiDung = object.getString("name");
                             String email = object.getString("email");
                             String ngaysinh = object.getString("user_birthday");
+                            String image = object.getString("picture");
                             nguoiDung.setTenNguoiDung(tenNguoiDung);
                             nguoiDung.setEmail(email);
                             nguoiDung.setGioitinh(gender);
                             nguoiDung.setNamSinh(ngaysinh);
+                            nguoiDung.setImage(image);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -378,7 +434,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     private void quenMatKhau() {
     }
 
-    private void dangNhap() {
+  /*  private void dangNhap() {
         if (!validateEmailDangNhap()){
             return;
         }if (!validateMatKhauDangNhap()){
@@ -394,7 +450,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
                 }
 
         }
-    }
+    }*/
     boolean ketqua = false;
     private boolean dangnhapOnline(NguoiDung nguoiDung) {
         Retrofit retrofit = RetrofitHandler.retrofit(ConstantsNguoiDung.BASE_URL);
@@ -430,7 +486,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d("connectionResult",connectionResult+" ");
     }
-    private class DangNhapTextWatcher implements TextWatcher {
+   /* private class DangNhapTextWatcher implements TextWatcher {
         View view;
 
         public DangNhapTextWatcher(View view) {
@@ -480,5 +536,14 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
             textInputLayout_Email.setErrorEnabled(false);
         }
         return true;
+    }*/
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage("loading...");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
     }
 }

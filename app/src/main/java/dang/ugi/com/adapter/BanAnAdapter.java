@@ -21,9 +21,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import dang.ugi.com.R;
 import dang.ugi.com.asyntask.LoadBanAsynTask;
 import dang.ugi.com.asyntask.LoadGoiMonAsynTask;
-import dang.ugi.com.R;
 import dang.ugi.com.model.Entities.BanAn;
 import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.GoiMon;
@@ -103,10 +103,10 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
         viewHolder = holder;
         banAnSelected = _listBanAn.get(position);
         viewHolder.textViewTenBan.setText(banAnSelected.getTenBanAn());
-        maBan = banAnSelected.getMaBanAn();
+        final int maBanSelect = banAnSelected.getMaBanAn();
         String tenBan = banAnSelected.getTenBanAn();
         int tinhTrang = banAnSelected.getTinhTrang();
-        viewHolder.textViewMaBan.setText(String.valueOf(maBan));
+        viewHolder.textViewMaBan.setText(String.valueOf(maBanSelect));
         if (tinhTrang == 1) {
             // banAnItemViewHolder.relativeLayout.setBackgroundColor(_context.getResources().getColor(R.color.green_200));
             viewHolder.imageViewAnhBanAn.setImageResource(R.drawable.ban_an_true);
@@ -120,15 +120,14 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
         viewHolder.imageViewoverflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopupMenu(viewHolder.imageViewoverflow,maBan);
+                showPopupMenu(viewHolder.imageViewoverflow,maBanSelect);
             }
         });
 
         viewHolder.imageViewAnhBanAn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               int maBanChoose = Integer.parseInt(viewHolder.textViewMaBan.getText().toString());
-                showPopupMenuClick(view,maBanChoose);
+                showPopupMenuClick(view,maBanSelect);
             }
         });
 
@@ -144,7 +143,7 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
         }*/
 
 
-    private void showPopupMenu(View view, final int maBan) {
+    private void showPopupMenu(View view, final int maBanG) {
         PopupMenu popupMenu = new PopupMenu(_context, view);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.menu_cardview_banan, popupMenu.getMenu());
@@ -153,11 +152,11 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
                                                  public boolean onMenuItemClick(MenuItem item) {
                                                      switch (item.getItemId()) {
                                                          case R.id.item_menu_sua: {
-                                                             suaBanAn(maBan);
+                                                             suaBanAn(maBanG);
                                                          }
                                                          break;
                                                          case R.id.item_menu_xoa: {
-                                                             xoaBanAn(maBan);
+                                                             xoaBanAn(maBanG);
                                                          }
                                                          break;
                                                      }
@@ -168,7 +167,7 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
         popupMenu.show();
     }
 
-    private void showPopupMenuClick(View view, final int maBan) {
+    private void showPopupMenuClick(View view,final int maBanG) {
         PopupMenu popupMenu = new PopupMenu(_context, view);
         popupMenu.inflate(R.menu.menu_cardview_goimon);
         popupMenu.setGravity(Gravity.CENTER_VERTICAL);
@@ -177,7 +176,7 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
         MenuItem menuItemChuyenBan = menu.findItem(R.id.item_menu_list_goimon_chuyenBan);
         MenuItem menuItemThanhToan = menu.findItem(R.id.item_menu_list_goimon_thanhtoan);
         MenuItem menuItemHuy = menu.findItem(R.id.item_menu_list_goimon_huy);
-        banAnSelected = implPresenterBanAn.layBanAnbyMaBanAn(maBan);
+        banAnSelected = implPresenterBanAn.layBanAnbyMaBanAn(maBanG);
         int tinhtrang = banAnSelected.getTinhTrang();
         if (tinhtrang == 0 || tinhtrang == -1) {
             menuItemChiTiet.setVisible(false);
@@ -195,23 +194,23 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.item_menu_list_goimon_chitiet: {
-                        chuyenManHinhChiTietGoiMon(maBan);
+                        chuyenManHinhChiTietGoiMon(maBanG);
                     }
                     break;
                     case R.id.item_menu_list_goimon_chuyenBan: {
-                        chuyenManHinhChuyenBan(maBan);
+                        chuyenManHinhChuyenBan(maBanG);
                     }
                     break;
                     case R.id.item_menu_list_goimon_goimon: {
-                        chuyenManHinhGoiMon(maBan);
+                        chuyenManHinhGoiMon(maBanG);
                     }
                     break;
                     case R.id.item_menu_list_goimon_thanhtoan: {
-                        chuyenManHinhThanhToan(maBan);
+                        chuyenManHinhThanhToan(maBanG);
                     }
                     break;
                     case R.id.item_menu_list_goimon_huy: {
-                        huyGoiMon(maBan);
+                        huyGoiMon(maBanG);
                     }
                     break;
                 }
@@ -245,10 +244,10 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
       
     }
 
-    private void chuyenManHinh(int requestcode,int maBan) {
-        Intent intent = new Intent((AppCompatActivity) _context, GoiMonActivity.class);
+    private void chuyenManHinh(int requestcode,int maBanGoi) {
+        Intent intent = new Intent( _context, GoiMonActivity.class);
         intent.putExtra("requestcode", requestcode);
-        intent.putExtra("maBan", maBan);
+        intent.putExtra("maBan", maBanGoi);
         ((AppCompatActivity) _context).startActivityForResult(intent, requestcode);
     }
 
@@ -256,17 +255,19 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
         chuyenManHinh(Static_Id.REQUEST_CODE_CHITIETGOIMON_TUBAN, maBan);
     }
 
-    private void chuyenManHinhChuyenBan(int goimon) {
-        Intent intent = new Intent((AppCompatActivity) _context, ChuyenBanActivity.class);
+    private void chuyenManHinhChuyenBan(int maGoimon) {
+        Intent intent = new Intent(_context, ChuyenBanActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("GOIMON", goimon);
+        GoiMon gm = implGoiMonPresenter.layGoiMonTheoMaGoiMon(maGoimon);
+        bundle.putSerializable("GOIMON", gm);
         intent.putExtra("bsGoiMon", bundle);
         intent.putExtra("requestcode", Static_Id.REQUEST_CODE_CHUYENBAN_TUBAN);
         ((AppCompatActivity) _context).startActivityForResult(intent, Static_Id.REQUEST_CODE_CHUYENBAN_TUBAN);
     }
 
-    private void chuyenManHinhGoiMon(int maBan) {
-        chuyenManHinh(Static_Id.REQUEST_CODE_GOIMONMOI_TUBAN,maBan);
+    private void chuyenManHinhGoiMon(int maBanGoi) {
+        String tenBan = implPresenterBanAn.layBanAnbyMaBanAn(maBanGoi).getTenBanAn();
+        chuyenManHinh(Static_Id.REQUEST_CODE_GOIMONMOI_TUBAN,maBanGoi);
     }
 
     @Override
@@ -312,8 +313,6 @@ public class BanAnAdapter extends RecyclerView.Adapter<BanAnAdapter.BanAnItemVie
         if (implPresenterBanAn.xoaBanAn(maBan) != -1) {
             notifyDataSetChanged();
             new LoadBanAsynTask(_context, viewFragment).execute("");
-            Toast.makeText(_context, R.string.xoaBanThanhCong, Toast.LENGTH_SHORT).show();
-
         }
     }
 

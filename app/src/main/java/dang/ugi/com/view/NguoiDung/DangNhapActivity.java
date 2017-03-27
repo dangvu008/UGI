@@ -11,7 +11,6 @@ import com.facebook.FacebookSdk;
 
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.ViewPaperAdapter;
-import dang.ugi.com.model.Utils.PrefDangNhap;
 import dang.ugi.com.presenter.NguoiDung.ImplNguoiDungPresenter;
 
 public class DangNhapActivity extends AppCompatActivity {
@@ -37,17 +36,14 @@ public class DangNhapActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPaperAdapter adapter = new ViewPaperAdapter(getSupportFragmentManager());
-        if(PrefDangNhap.layNguoiDungHienTai(DangNhapActivity.this)==null){
             adapter.addFragment(new FragmentDangNhap(),getString(R.string.login));
-            if (intent.getStringExtra("capnhatnguoidung")==null){
+          /*  if (intent.getStringExtra("capnhatnguoidung")==null){
                 adapter.addFragment(new FragmentDangki(),getString(R.string.register));
 
             }else{
                 adapter.addFragment(new FragmentDangki(),intent.getStringExtra("capnhatnguoidung"));
-            }
-        }else{
-            adapter.addFragment(new FragmentDangki(),getString(R.string.register));
-        }
+            }*/
+
 
 
         viewPager.setAdapter(adapter);

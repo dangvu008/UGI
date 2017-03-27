@@ -19,13 +19,11 @@ import dang.ugi.com.model.Entities.BanAn;
 public class BanAnSearchAdapter extends ArrayAdapter<BanAn> {
     Context context;
     List<BanAn> listBanAn;
-    int layoutId;
     boolean chuyenban = false;
-    public BanAnSearchAdapter(Context context,int resourceId, List<BanAn> listBanAn) {
+    public BanAnSearchAdapter(Context context, List<BanAn> listBanAn) {
         super(context,0,listBanAn);
         this.context = context;
         this.listBanAn = listBanAn;
-        this.layoutId =  resourceId;
     }
 
 

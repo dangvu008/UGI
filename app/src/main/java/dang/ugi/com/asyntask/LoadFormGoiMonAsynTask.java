@@ -15,6 +15,7 @@ import java.util.List;
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.ChiTietGoiMonAdapter;
 import dang.ugi.com.model.Entities.ChiTietGoiMon;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.GoiMon;
 import dang.ugi.com.model.Utils.FormatData;
 import dang.ugi.com.model.Utils.PrefNhaHang;
@@ -41,7 +42,9 @@ public class LoadFormGoiMonAsynTask extends AsyncTask<Integer, List<ChiTietGoiMo
         this.context = context;
         implChiTietGoiMonPresenter = new ImplChiTietGoiMonPresenter(context);
         implGoiMonPresenter = new ImplGoiMonPresenter(context);
-        maCuaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
+        CuaHang cuaHang = PrefNhaHang.layCuaHangHienTai(context);
+        if (cuaHang!=null)
+            maCuaHang = cuaHang.getMaCuaHang();
         loadControls(context);
     }
 

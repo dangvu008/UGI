@@ -17,7 +17,7 @@ public interface INguoiDungPresenter {
     boolean kiemTraSoDienthoaiTonTai(String sodienthoai);
     boolean kiemTraTenTonTai(String ten);
     boolean xoaNguoiDung(int maNguoiDung);
-
+    int lastIdNguoiDung();
     boolean updateNguoiDung(NguoiDung nguoiDung);
 
     AccessToken layTokenHienTai();
@@ -26,6 +26,7 @@ public interface INguoiDungPresenter {
     List<NguoiDung> listAllNguoiDung(int maCuaHang);
     List<NguoiDung> listUnsyncNguoiDung(int maCuaHang);
     List<NguoiDung> timKiemNguoiDung(String keySearch,int maCuaHang);
+    NguoiDung checkAllowLogin(String email);
     void destroyAccessToken();
     String setErrorEmail();
     String setErrorMatKhau();

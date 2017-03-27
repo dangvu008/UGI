@@ -145,7 +145,6 @@ public class GoiMonThemMonDialog extends Activity implements IFormActivity, View
     @Override
     public void addEvents() {
         autoCompleteTextViewTenMon.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 if (autoCompleteTextViewTenMon.getText().length() == 0) {

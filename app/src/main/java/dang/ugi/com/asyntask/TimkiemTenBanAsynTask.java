@@ -1,8 +1,8 @@
 package dang.ugi.com.asyntask;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.AutoCompleteTextView;
 
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.List;
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.BanAnSearchAdapter;
 import dang.ugi.com.model.Entities.BanAn;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.presenter.BanAn.ImplPresenterBanAn;
 
@@ -26,11 +27,20 @@ public class TimkiemTenBanAsynTask extends AsyncTask<String, List<BanAn>, List<B
     ImplPresenterBanAn implPresenterBanAn;
     AutoCompleteTextView autoCompleteTextView;
     int maCuahang,chucNang;
-    public TimkiemTenBanAsynTask(Context context) {
+    //chuc nang  = 0 : goi mon
+    //chuc nang = 1:tim kiem ten ban
+    //chuc nang = 2 :tim kiem ten chuyen ban
+    public TimkiemTenBanAsynTask(Context context,int chucNang) {
         this.context = context;
-        maCuahang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
+          CuaHang cuahang = PrefNhaHang.layCuaHangHienTai(context);
+        if (cuahang!=null)
+            maCuahang = cuahang.getMaCuaHang();
+        if (chucNang==0)
+            autoCompleteTextView = (AutoCompleteTextView) ((AppCompatActivity)context).findViewById(R.id.autocomplete_danggoimon_tenban);
+        else if (chucNang==2)
+            autoCompleteTextView = (AutoCompleteTextView) ((AppCompatActivity)context).findViewById(R.id.autocomplete_chuyenban_tenban);
         implPresenterBanAn = new ImplPresenterBanAn(context);
-        autoCompleteTextView = (AutoCompleteTextView) ((Activity)context).findViewById(R.id.autocomplete_danggoimon_tenban);
+
     }
 
     @Override
@@ -58,7 +68,7 @@ public class TimkiemTenBanAsynTask extends AsyncTask<String, List<BanAn>, List<B
     }
 
     private void hienthiTenBan(List<BanAn> list) {
-        banAnSearchAdapter = new BanAnSearchAdapter(context, 0, list);
+        banAnSearchAdapter = new BanAnSearchAdapter(context, list);
         autoCompleteTextView.setAdapter(banAnSearchAdapter);
         autoCompleteTextView.showDropDown();
         banAnSearchAdapter.setNotifyOnChange(true);

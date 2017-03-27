@@ -10,6 +10,7 @@ import java.util.List;
 
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.GoiMonAdapter;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.GoiMon;
 import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.presenter.GoiMon.ImplGoiMonPresenter;
@@ -28,7 +29,9 @@ public class LoadGoiMonAsynTask extends AsyncTask<Integer, List<GoiMon>, List<Go
     public LoadGoiMonAsynTask(Context context,View view) {
         this.context = context;
         this.view = view;
-        maCuaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
+        CuaHang cuaHang = PrefNhaHang.layCuaHangHienTai(context);
+        if (cuaHang!=null)
+            maCuaHang = cuaHang.getMaCuaHang();
         implGoiMonPresenter = new ImplGoiMonPresenter(context);
         recyclerView_list_goimon = (RecyclerView) view.findViewById(R.id.recycler_list_goimon);
 

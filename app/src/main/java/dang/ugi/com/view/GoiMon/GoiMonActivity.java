@@ -18,8 +18,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +29,10 @@ import dang.ugi.com.asyntask.LoadTongTienGoiMonAsyntask;
 import dang.ugi.com.asyntask.TimkiemTenBanAsynTask;
 import dang.ugi.com.model.Entities.BanAn;
 import dang.ugi.com.model.Entities.ChiTietGoiMon;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.GoiMon;
+import dang.ugi.com.model.Entities.NguoiDung;
+import dang.ugi.com.model.Utils.FormatData;
 import dang.ugi.com.model.Utils.PrefDangNhap;
 import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.model.Utils.Static_Id;
@@ -67,7 +68,6 @@ public class GoiMonActivity extends Activity implements IFormActivity, View.OnCl
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,18 +79,22 @@ public class GoiMonActivity extends Activity implements IFormActivity, View.OnCl
         implPresenterBanAn = new ImplPresenterBanAn(this);
         implGoiMonPresenter = new ImplGoiMonPresenter(this);
         implChiTietGoiMonPresenter = new ImplChiTietGoiMonPresenter(this);
-        maCuaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
-        maNguoiDung = PrefDangNhap.layNguoiDungHienTai(context).getMaNguoiDung();
+        CuaHang cuaHangHT = PrefNhaHang.layCuaHangHienTai(context);
+        NguoiDung nguoiDungHT = PrefDangNhap.layNguoiDungHienTai(context);
+        if (cuaHangHT!=null && nguoiDungHT!=null){
+            maCuaHang = cuaHangHT.getMaCuaHang();
+            maNguoiDung = nguoiDungHT.getMaNguoiDung();
+        }
+
         implGoiMonPresenter.xoaLichSuGoiMonTam();
         intentLoad = getIntent();
-        Bundle bundle = intentLoad.getBundleExtra("bsGoiMon");
          maBanSelected= intentLoad.getIntExtra("maBan",1);
          if (intentLoad.getExtras()!=null){
              banAn = implPresenterBanAn.layBanAnbyMaBanAn(maBanSelected);
              autoCompleteTextViewTenBan.setText(banAn.getTenBanAn());
              goiMon = implGoiMonPresenter.layGoiMonDangGoi(maBanSelected);
             if (goiMon!=null){
-                loadFormGoiMon(goiMon);
+                new LoadFormGoiMonAsynTask(context).execute(goiMon.getMaGoiMon());
             }
          }
         addEvents();
@@ -110,10 +114,17 @@ public class GoiMonActivity extends Activity implements IFormActivity, View.OnCl
 
     private void loadFormGoiMon(GoiMon goiMon) {
         listChiTietGoiMon = implChiTietGoiMonPresenter.listChiTietGoiMon(goiMon.getMaGoiMon());
-        recyclerView_danggoimon_MonDaGoi.setVisibility(View.GONE);
-        recyclerView_danggoimon_MonDaGoi.setVisibility(View.VISIBLE);
-        ChiTietGoiMonAdapter chiTietGoiMonAdapter = new ChiTietGoiMonAdapter(context,listChiTietGoiMon);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        if (listChiTietGoiMon==null){
+            recyclerView_danggoimon_MonDaGoi.setVisibility(View.GONE);
+            textView_danggoimon_thongbaorong.setVisibility(View.VISIBLE);
+        }else{
+            textView_danggoimon_thongbaorong.setVisibility(View.GONE);
+            recyclerView_danggoimon_MonDaGoi.setVisibility(View.VISIBLE);
+        }
+
+        ChiTietGoiMonAdapter chiTietGoiMonAdapter = new ChiTietGoiMonAdapter(this,listChiTietGoiMon);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        textView_danggoimon_TongTien.setText(FormatData.formatMoneyVietNam(goiMon.getTongTien()));
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView_danggoimon_MonDaGoi.setLayoutManager(layoutManager);
         recyclerView_danggoimon_MonDaGoi.setAdapter(chiTietGoiMonAdapter);
@@ -144,7 +155,7 @@ public class GoiMonActivity extends Activity implements IFormActivity, View.OnCl
         if (!validateTenBan()) {
             return;
         } else {
-            tongTien =  Float.parseFloat(textView_danggoimon_TongTien.getText().toString());
+            tongTien =  Float.parseFloat(textView_danggoimon_TongTien.getText().toString().replace(".",""));
             goiMon.setTongTien(tongTien);
             goiMon.setTinhTrang(0);
             if (implGoiMonPresenter.capNhatGoiMon(goiMon) != -1) {
@@ -170,13 +181,21 @@ public class GoiMonActivity extends Activity implements IFormActivity, View.OnCl
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        GoiMon goiMonDG = implGoiMonPresenter.layGoiMonDangGoi(maBanSelected);
+        if (goiMonDG!=null)
+            loadFormGoiMon(goiMonDG);
+    }
+
+    @Override
     public void addEvents() {
         autoCompleteTextViewTenBan.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 if (autoCompleteTextViewTenBan.getText().length() == 0) {
-                    new TimkiemTenBanAsynTask((Activity)view.getContext()).execute("", "");
+                    new TimkiemTenBanAsynTask((Activity)view.getContext(),0).execute("", "");
                 }
             }
         });
@@ -224,10 +243,6 @@ public class GoiMonActivity extends Activity implements IFormActivity, View.OnCl
             }
             break;
             case R.id.btn_danggoimon_thoat: {
-               if (goiMon!=null && goiMon.getTinhTrang()==-1){
-                   implGoiMonPresenter.xoaGoiMon(goiMon.getMaGoiMon());
-                   implChiTietGoiMonPresenter.xoaChiTietGoiMon(goiMon.getMaGoiMon());
-               }
                 finish();
             }
             break;
@@ -323,7 +338,7 @@ public class GoiMonActivity extends Activity implements IFormActivity, View.OnCl
                 case R.id.autocomplete_danggoimon_tenban: {
                     String s = charSequence.toString();
                     if (s.length() != 0) {
-                        new TimkiemTenBanAsynTask(context).execute(s);
+                        new TimkiemTenBanAsynTask(context,0).execute(s);
                     }
                 }
                 break;

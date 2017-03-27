@@ -21,6 +21,8 @@ public interface INguoiDungDatabaseHandler {
     boolean xoaNguoiDung(int maNguoiDung);
     boolean updateNguoiDung(NguoiDung nguoiDung);
     NguoiDung dangNhap(String account,String matKhau);
+    int lastIdNguoiDung();
+    NguoiDung checkAllowLogin(String email);
     long capNhatTrangThaiNguoiDung(int MaNguoiDung,int trangThai);
     List<NguoiDung> timKiemNguoiDung(String keySearch,int maCuaHang);
 }

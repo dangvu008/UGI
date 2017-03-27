@@ -29,6 +29,9 @@ import dang.ugi.com.model.Utils.Static_Id;
 import dang.ugi.com.presenter.BanAn.ImplPresenterBanAn;
 import dang.ugi.com.presenter.GoiMon.ImplGoiMonPresenter;
 import dang.ugi.com.view.GoiMon.GoiMonActivity;
+import dang.ugi.com.view.GoiMon.ThanhToanDialog;
+
+import static dang.ugi.com.model.Utils.Static_Id.REQUEST_CODE_THANHTOANGOIMON_TUGOIMON;
 
 /**
  * Created by DANG on 11/20/2016.
@@ -48,8 +51,10 @@ public class GoiMonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public GoiMonAdapter(List<GoiMon> listGoiMon, Context context) {
         this.listGoiMon = listGoiMon;
         this.context = context;
-        nguoiDung = PrefDangNhap.layNguoiDungHienTai(context);
-        maNhaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
+        if (PrefDangNhap.layNguoiDungHienTai(context)!=null)
+            nguoiDung = PrefDangNhap.layNguoiDungHienTai(context);
+        if (PrefNhaHang.layCuaHangHienTai(context)!=null)
+              maNhaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
         implPresenterBanAn = new ImplPresenterBanAn(context);
         implGoiMonPresenter = new ImplGoiMonPresenter(context);
     }
@@ -176,7 +181,13 @@ public class GoiMonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     private void chuyenManHinhThanhToan() {
-       chuyenManHinh(Static_Id.REQUEST_CODE_THANHTOANGOIMON_TUGOIMON);
+        Intent intent = new Intent((AppCompatActivity) context, ThanhToanDialog.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("GOIMON", goiMonSelected);
+        intent.putExtra("bsGoiMon", bundle);
+        intent.putExtra("requestcode",REQUEST_CODE_THANHTOANGOIMON_TUGOIMON);
+        ((AppCompatActivity) context).startActivityForResult(intent, REQUEST_CODE_THANHTOANGOIMON_TUGOIMON);
+
     }
     private void chuyenManHinh(int requestcode){
         Intent intent = new Intent((AppCompatActivity) context, GoiMonActivity.class);

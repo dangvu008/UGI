@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background_choosed">
+    android:background="@color/color_background_choosed"
+    android:gravity="center"
+    android:orientation="vertical">
 
-   <android.support.design.widget.TextInputLayout
+    <!-- <android.support.design.widget.TextInputLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:id="@+id/input_layout_DangNhap_Email"
@@ -74,28 +75,38 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:textSize="18dp" />
-
+-->
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center_horizontal|center"
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ibtnLogin_facebook"
-            android:src="@drawable/ic_facebook"
-            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:background="@color/colorButtonLoginFacebook"
-            android:layout_marginRight="20dp" />
-
-        <ImageButton
+            android:padding="10dp"
+            android:src="@drawable/ic_facebook" />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Hoặc Đăng Nhập Bằng"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:textSize="18dp" />
+
+        <ImageButton
             android:id="@+id/ibtnLogin_google"
-            android:src="@drawable/ic_google"
-            android:padding="15dp"
-            android:background="@color/colorButtonLoginGoogle" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorButtonLoginGoogle"
+            android:padding="10dp"
+            android:src="@drawable/ic_google" />
     </LinearLayout>
 </LinearLayout>

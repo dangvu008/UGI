@@ -16,6 +16,7 @@ android {
     }
     buildTypes {
         release {
+            testCoverageEnabled = true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -32,6 +33,7 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.android.gms:play-services-drive:10.0.1'
     compile 'com.google.android.gms:play-services-auth:10.0.1'
     compile 'com.scottyab:aescrypt:0.0.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'

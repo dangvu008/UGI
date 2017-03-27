@@ -12,6 +12,7 @@ import dang.ugi.com.asyntask.LoadGoiMonAsynTask;
 
 
 public class FragmentGoiMon extends Fragment {
+    View view;
     public FragmentGoiMon() {
         // Required empty public constructor
     }
@@ -29,7 +30,7 @@ public class FragmentGoiMon extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_goi_mon, container, false);
+         view = inflater.inflate(R.layout.fragment_goi_mon, container, false);
         new LoadGoiMonAsynTask(getActivity(),view).execute(2);
         addEvents();
         return view;
@@ -38,4 +39,9 @@ public class FragmentGoiMon extends Fragment {
     private void addEvents() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadGoiMonAsynTask(getActivity(),view).execute(2);
+    }
 }

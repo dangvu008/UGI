@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import dang.ugi.com.R;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.LoaiMon;
 import dang.ugi.com.model.Entities.MonAn;
 import dang.ugi.com.model.Utils.PrefNhaHang;
@@ -33,11 +34,14 @@ public class MonAnFragmentAdapter extends RecyclerView.Adapter<MonAnFragmentAdap
     ImpPresenterMonAn impPresenterMonAn;
     ImplLoaiMonAnPresenter implLoaiMonAnPresenter;
     int maCuaHang;
+    CuaHang cuaHang;
     public MonAnFragmentAdapter(Context context) {
         this.context = context;
         impPresenterMonAn = new ImpPresenterMonAn(context);
+        cuaHang = PrefNhaHang.layCuaHangHienTai(context);
         implLoaiMonAnPresenter = new ImplLoaiMonAnPresenter(context);
-        maCuaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
+       if (cuaHang!=null)
+           maCuaHang = cuaHang.getMaCuaHang();
         listLoaiMon = implLoaiMonAnPresenter.listLoaiMonTheoCuaHang(maCuaHang);
     }
 

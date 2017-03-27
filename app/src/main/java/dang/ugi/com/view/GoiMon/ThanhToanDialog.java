@@ -1,5 +1,6 @@
 package dang.ugi.com.view.GoiMon;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,13 +47,14 @@ public class ThanhToanDialog extends AppCompatActivity {
     ImplGoiMonPresenter implGoiMonPresenter;
     ImplPresenterBanAn implPresenterBanAn;
     ImplPresenterHoaDon implPresenterHoaDon;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thanh_toan_dialog);
         addControls();
         context = this;
-        Intent intent = getIntent();
+         intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bsGoiMon");
         goimon = (GoiMon) bundle.getSerializable("GOIMON");
         implChiTietGoiMonPresenter = new ImplChiTietGoiMonPresenter(this);
@@ -145,14 +147,16 @@ public class ThanhToanDialog extends AppCompatActivity {
         HoaDon hoadon = new HoaDon();
         hoadon.setMaGoiMon(Integer.parseInt(textViewMaGoiMon.getText().toString()));
         hoadon.setMaNguoiDungThanhToan(maNguoiDung);
-        hoadon.setTienthem(Float.parseFloat(editTextTienPhatSinh.getText().toString().replace(".","").trim()));
+        hoadon.setTienthem(Float.parseFloat(editTextTienPhatSinh.getText().toString().replace(",","").trim()));
         hoadon.setGhiChu(editTextGhiChu.getText().toString());
-        hoadon.setSotien(Float.parseFloat(editTextTongTien.getText().toString().replace(".","").trim()));
+        hoadon.setSotien(Float.parseFloat(editTextTongTien.getText().toString().replace(",","").trim()));
         hoadon.setThoiGianThanhToan(new Timestamp(date.getTime()));
         if (implPresenterHoaDon.themHoaDon(hoadon)!=-1){
             implPresenterBanAn.capNhatTrangThaiBan(goimon.getMaBan(),0);
             goimon.setTinhTrang(1);
+            goimon.setTongTien(Float.parseFloat(editTextTongTien.getText().toString().replace(",","").trim()));
             implGoiMonPresenter.capNhatGoiMon(goimon);
+            setResult(Activity.RESULT_OK,intent);
             Toast.makeText(context, "ok", Toast.LENGTH_SHORT).show();
             finish();
         }

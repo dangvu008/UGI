@@ -77,6 +77,11 @@ public class ImpPresenterCuaHang implements IPresenterCuaHang {
     }
 
     @Override
+    public CuaHang checkCuaHangNguoiDung(int maNguoiDung) {
+        return databaseHandler.checkCuaHangNguoiDung(maNguoiDung);
+    }
+
+    @Override
     public List<LoaiCuaHang> layLoaiCuaHang() {
         return databaseHandler.layLoaiCuaHang();
     }

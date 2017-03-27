@@ -38,6 +38,7 @@ public class ImpNguoiDungDatabaseHandler implements INguoiDungDatabaseHandler {
             values.put(UgiDatabase.COLUMN_NGUOIDUNG_EMAIL,nguoiDung.getEmail());
             values.put(UgiDatabase.COLUMN_GIOITINH,nguoiDung.getGioitinh());
             values.put(UgiDatabase.COLUMN_NAMSINH, String.valueOf(nguoiDung.getNamSinh()));
+            values.put(UgiDatabase.COLUMN_IMAGE,nguoiDung.getImage());
             values.put(UgiDatabase.COLUMN_MATKHAU,nguoiDung.getMatKhau());
             values.put(UgiDatabase.COLUMN_NGUOIDUNG_SDT,nguoiDung.getSoDienThoai());
             values.put(UgiDatabase.COLUMN_NGUOIDUNG_TINHTRANG,1);
@@ -61,8 +62,11 @@ public class ImpNguoiDungDatabaseHandler implements INguoiDungDatabaseHandler {
         values.put(UgiDatabase.COLUMN_GIOITINH,nguoiDung.getGioitinh());
         values.put(UgiDatabase.COLUMN_NAMSINH, String.valueOf(nguoiDung.getNamSinh()));
         values.put(UgiDatabase.COLUMN_MATKHAU,nguoiDung.getMatKhau());
+        values.put(UgiDatabase.COLUMN_IMAGE,nguoiDung.getImage());
         values.put(UgiDatabase.COLUMN_NGUOIDUNG_SDT,nguoiDung.getSoDienThoai());
         values.put(UgiDatabase.COLUMN_NGUOIDUNG_TINHTRANG,nguoiDung.getTinhTrang());
+        values.put(UgiDatabase.COLUMN_MAQUYEN,nguoiDung.getMaQuyen());
+        values.put(UgiDatabase.COLUMN_NGUOIDUNG_ALLOWLOGIN,nguoiDung.getAllowLogin());
         values.put(UgiDatabase.COLUMN_NGUOIDUNG_SYNC,nguoiDung.getSync());
         return database.update(UgiDatabase.TABLE_NGUOIDUNG,values,UgiDatabase.COLUMN_MANGUOIDUNG+ " = ?",new String[]{String.valueOf(nguoiDung.getMaNguoiDung())});
 
@@ -251,6 +255,49 @@ public class ImpNguoiDungDatabaseHandler implements INguoiDungDatabaseHandler {
      return nguoiDung;
     }
 
+    @Override
+    public int lastIdNguoiDung() {
+        int lastId = 0;
+        String strSQL = "SELECT * FROM NguoiDung MaNguoiDung ORDER BY Id DESC LIMIT 1";
+        database = databaseHelper.getReadableDatabase();
+        try {
+            cursor  = database.rawQuery(strSQL,null);
+            if (cursor.moveToFirst()&&cursor!=null){
+                lastId = cursor.getInt(cursor.getColumnIndex(UgiDatabase.COLUMN_MANGUOIDUNG));
+            }
+        }catch (Exception ex){}
+        finally {
+           if (cursor!=null)
+               cursor.close();
+            database.close();
+        }
+
+        return lastId;
+    }
+
+    @Override
+    public NguoiDung checkAllowLogin(String email) {
+        NguoiDung nguoiDung = null;
+        try {
+            database = databaseHelper.getReadableDatabase();
+            cursor  = database.query(UgiDatabase.TABLE_NGUOIDUNG,null,
+                    UgiDatabase.COLUMN_NGUOIDUNG_EMAIL + " = ?  AND " +
+                            UgiDatabase.COLUMN_NGUOIDUNG_ALLOWLOGIN  +" = 1 "
+                    ,new String[]{email},null,null,null);
+            if (cursor.moveToFirst()){
+                nguoiDung = CursorToNguoiDung(cursor);
+            }
+        }  catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            if(cursor!=null){
+                cursor.close();
+            }
+            database.close();
+        }
+        return nguoiDung;
+    }
+
     @NonNull
     private NguoiDung CursorToNguoiDung(Cursor cursor) {
         NguoiDung nguoiDung = new NguoiDung();
@@ -259,7 +306,9 @@ public class ImpNguoiDungDatabaseHandler implements INguoiDungDatabaseHandler {
         nguoiDung.setEmail(cursor.getString(cursor.getColumnIndex(UgiDatabase.COLUMN_NGUOIDUNG_EMAIL)));
         nguoiDung.setSoDienThoai(cursor.getString(cursor.getColumnIndex(UgiDatabase.COLUMN_NGUOIDUNG_SDT)));
         nguoiDung.setMatKhau(cursor.getString(cursor.getColumnIndex(UgiDatabase.COLUMN_MATKHAU)));
+        nguoiDung.setImage(cursor.getString(cursor.getColumnIndex(UgiDatabase.COLUMN_IMAGE)));
         nguoiDung.setMaQuyen(cursor.getInt(cursor.getColumnIndex(UgiDatabase.COLUMN_MAQUYEN)));
+        nguoiDung.setAllowLogin(cursor.getInt(cursor.getColumnIndex(UgiDatabase.COLUMN_NGUOIDUNG_ALLOWLOGIN)));
         nguoiDung.setTinhTrang(cursor.getInt(cursor.getColumnIndex(UgiDatabase.COLUMN_NGUOIDUNG_TINHTRANG)));
         nguoiDung.setSync(cursor.getInt(cursor.getColumnIndex(UgiDatabase.COLUMN_NGUOIDUNG_SYNC)));
         return nguoiDung;

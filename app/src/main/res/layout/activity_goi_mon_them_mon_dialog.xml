@@ -109,7 +109,8 @@
                 android:background="@color/colorPrimary"
                 android:textColor="@color/cardview_light_background"
                 android:layout_marginEnd="10dp"
-                tools:ignore="ButtonStyle" />
+                tools:ignore="ButtonStyle"
+                android:layout_marginRight="10dp" />
 
             <Button
                 android:id="@+id/btn_themMonVaoGoiMon_thoat"

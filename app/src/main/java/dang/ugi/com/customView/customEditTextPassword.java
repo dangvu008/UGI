@@ -1,5 +1,6 @@
 package dang.ugi.com.customView;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,6 +17,7 @@ import dang.ugi.com.R;
 /**
  * Created by DANG on 9/5/2016.
  */
+@SuppressLint("AppCompatCustomView")
 public class customEditTextPassword extends EditText {
     Drawable eye,eyeStrike;
     boolean visible=false;

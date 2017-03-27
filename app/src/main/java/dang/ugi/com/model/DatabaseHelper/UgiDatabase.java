@@ -28,6 +28,7 @@ public class UgiDatabase {
     public static final String COLUMN_NGUOIDUNG_EMAIL = "Email";
     public static final String COLUMN_MAQUYEN = "MaQuyen";
     public static final String COLUMN_MATKHAU = "MatKhau";
+    public static final String COLUMN_IMAGE = "Image";
     public static final String COLUMN_GIOITINH = "GioiTInh";
     public static final String COLUMN_NAMSINH = "NamSinh";
     public static final String COLUMN_NGUOIDUNG_SDT = "SoDienThoai";
@@ -107,10 +108,11 @@ public class UgiDatabase {
             COLUMN_MATKHAU + " TEXT , " +
             COLUMN_GIOITINH + " TEXT ," +
             COLUMN_NAMSINH + " TEXT ," +
+            COLUMN_IMAGE + " TEXT ," +
             COLUMN_NGUOIDUNG_SDT + " TEXT ," +
-            COLUMN_MAQUYEN + " INTEGER NOT NULL," +
+            COLUMN_MAQUYEN + " INTEGER DEFAULT 1," +
             COLUMN_NGUOIDUNG_TINHTRANG + " INTEGER, " +
-            COLUMN_NGUOIDUNG_ALLOWLOGIN + " INTEGER DEFAULT 0, " +
+            COLUMN_NGUOIDUNG_ALLOWLOGIN + " INTEGER DEFAULT 1, " +
             COLUMN_NGUOIDUNG_SYNC + " INTEGER DEFAULT 0 ) ";
     // MON AN
 
@@ -145,7 +147,7 @@ public class UgiDatabase {
 
     public static final String CREATE_TABLE_CUAHANG = "CREATE TABLE  " + TABLE_CUAHANG + "(" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
-            COLUMN_CUAHANG_MACUAHANG + " INTEGER UNIQUE , " +
+            COLUMN_CUAHANG_MACUAHANG + " INTEGER, " +
             COLUMN_CUAHANG_TENCUAHANG + " TEXT , " +
             COLUMN_CUAHANG_MALOAICUAHANG + " INTEGER , " +
             COLUMN_CUAHANG_LOGO + " TEXT , " +

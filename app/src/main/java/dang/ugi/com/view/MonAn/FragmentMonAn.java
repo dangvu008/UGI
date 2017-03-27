@@ -3,8 +3,6 @@ package dang.ugi.com.view.MonAn;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +12,10 @@ import java.util.List;
 
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.MonAnAdapter;
-import dang.ugi.com.adapter.MonAnFragmentAdapter;
+import dang.ugi.com.asyntask.LoadMonAnSynTask;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.LoaiMon;
+import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.presenter.LoaiMonAn.ImplLoaiMonAnPresenter;
 import dang.ugi.com.presenter.MonAn.ImpPresenterMonAn;
 
@@ -29,6 +29,9 @@ public class FragmentMonAn extends Fragment implements View.OnClickListener{
     RecyclerView recyclerViewMonAnTheoLoai;
     ImpPresenterMonAn impPresenterMonAn;
     ImplLoaiMonAnPresenter implLoaiMonAnPresenter;
+    View view;
+    private int maCuaHang;
+private Bundle bundle;
     public FragmentMonAn() {
         // Required empty public constructor
     }
@@ -37,15 +40,24 @@ public class FragmentMonAn extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       View view =  inflater.inflate(R.layout.fragment_mon_an, container, false);
-       recyclerViewMonAnTheoLoai = (RecyclerView) view.findViewById(R.id.recyerView_monan);
-        MonAnFragmentAdapter monAnFragmentAdapter = new MonAnFragmentAdapter(getActivity());
-        recyclerViewMonAnTheoLoai.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPX(5), true));
-        recyclerViewMonAnTheoLoai.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewMonAnTheoLoai.setAdapter(monAnFragmentAdapter);
-        recyclerViewMonAnTheoLoai.setHasFixedSize(true);
+        view =  inflater.inflate(R.layout.fragment_mon_an, container, false);
+        CuaHang cuaHangHT = PrefNhaHang.layCuaHangHienTai(getActivity());
+        if (cuaHangHT != null)
+            maCuaHang = cuaHangHT.getMaCuaHang();
+        bundle = getArguments();
+        if (bundle != null) {
+            String key = bundle.getString("keySearch");
+        } else {
+            new LoadMonAnSynTask(view).execute();
+        }
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (bundle==null)
+            new LoadMonAnSynTask(view).execute();
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.List;
 
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.MonAnSearchAdapter;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.MonAn;
 import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.presenter.MonAn.ImpPresenterMonAn;
@@ -28,7 +29,9 @@ public class TimKiemTenMonAsynTask extends AsyncTask<String,List<MonAn>,List<Mon
         this.context = context;
         impPresenterMonAn = new ImpPresenterMonAn(context);
         autoCompleteTextView = (AutoCompleteTextView) ((Activity)context).findViewById(R.id.autoCompleteTextView_dialog_goimon_tenmon);
-        maCuaHang = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
+       CuaHang cuahang = PrefNhaHang.layCuaHangHienTai(context);
+        if(cuahang!=null)
+             maCuaHang = cuahang.getMaCuaHang();
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
@@ -42,7 +43,6 @@ public class ChuyenBanActivity extends AppCompatActivity {
         if (bundle!=null){
             GoiMon  goimon = (GoiMon) bundle.getSerializable("GOIMON");
             banan= implPresenterBanAn.layBanAnbyMaBanAn(goimon.getMaBan());
-            autoCompleteTextViewTenBan.setText(banan.getTenBanAn());
         }
     }
 
@@ -75,8 +75,20 @@ public class ChuyenBanActivity extends AppCompatActivity {
         autoCompleteTextViewTenBan.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                new TimkiemTenBanAsynTask(context).execute("", String.valueOf(banan.getMaBanAn()));
+                autoCompleteTextViewTenBan.setText("");
+                new TimkiemTenBanAsynTask(context,2).execute("");
                 return false;
+            }
+        });
+        autoCompleteTextViewTenBan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
         autoCompleteTextViewTenBan.addTextChangedListener(new TextWatcher() {
@@ -88,7 +100,7 @@ public class ChuyenBanActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String s = charSequence.toString();
-                new TimkiemTenBanAsynTask(context).execute(s, String.valueOf(banan.getMaBanAn()));
+                new TimkiemTenBanAsynTask(context,2).execute(s);
             }
 
             @Override

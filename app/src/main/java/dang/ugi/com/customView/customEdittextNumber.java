@@ -17,26 +17,26 @@ import dang.ugi.com.R;
  * Created by DANG on 9/6/2016.
  */
 @SuppressLint("AppCompatCustomView")
-public class customEdittextEmail extends EditText {
+public class customEdittextNumber extends EditText {
     Drawable clear,noneClear,drawable;
     Boolean isClear = false;
-    public customEdittextEmail(Context context) {
+    public customEdittextNumber(Context context) {
         super(context);
         constructor();
     }
 
-    public customEdittextEmail(Context context, AttributeSet attrs) {
+    public customEdittextNumber(Context context, AttributeSet attrs) {
         super(context, attrs);
         constructor();
     }
 
-    public customEdittextEmail(Context context, AttributeSet attrs, int defStyleAttr) {
+    public customEdittextNumber(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         constructor();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public customEdittextEmail(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public customEdittextNumber(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         constructor();
     }
@@ -46,7 +46,7 @@ public class customEdittextEmail extends EditText {
         apply();
     }
     private void apply(){
-        setInputType(InputType.TYPE_CLASS_TEXT);
+        setInputType(InputType.TYPE_CLASS_NUMBER);
         Drawable[] drawables = getCompoundDrawables();
          drawable = isClear?clear:noneClear;
         setCompoundDrawablesWithIntrinsicBounds(drawables[0],drawables[1],drawable,drawables[3]);

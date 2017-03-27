@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class ImpCuaHangDatabaseHandler implements ICuaHangDatabaseHandler {
     SQLiteDatabase database;
     UgiDatabaseHelper databaseHelper;
     List<CuaHang> list;
+    private Cursor cursor;
+
     public ImpCuaHangDatabaseHandler(Context context) {
         this.context = context;
         databaseHelper = new UgiDatabaseHelper(context);
@@ -53,7 +56,7 @@ public class ImpCuaHangDatabaseHandler implements ICuaHangDatabaseHandler {
         String query ="SELECT * FROM CuaHang ch,NguoiDung nd,NguoiDung_CuaHang ndch WHERE ch.MaCuaHang = ndch.MaCuaHang AND " +
                 "ndch.MaNguoiDung = nd.MaNguoiDung AND ndch.MaNguoiDung = ? AND ch.TenCuaHang LIKE ? ";
         database = databaseHelper.getReadableDatabase();
-        Cursor cursor = database.rawQuery(query,new String[]{String.valueOf(maNguoiDung)});
+         cursor = database.rawQuery(query,new String[]{String.valueOf(maNguoiDung)});
         if (cursor.moveToFirst()){
             do {
                 CuaHang cuaHang =new CuaHang();
@@ -100,13 +103,22 @@ public class ImpCuaHangDatabaseHandler implements ICuaHangDatabaseHandler {
 
     @Override
     public long themCuaHang(CuaHang cuaHang) {
-        database = databaseHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(UgiDatabase.COLUMN_CUAHANG_TENCUAHANG,cuaHang.getTenCuahang());
-        values.put(UgiDatabase.COLUMN_CUAHANG_DIACHI,cuaHang.getDiaChi());
-        values.put(UgiDatabase.COLUMN_CUAHANG_SDT,cuaHang.getSoDienThoai());
-        values.put(UgiDatabase.COLUMN_CUAHANG_LOGO,cuaHang.getLogo());
-        return database.insert(UgiDatabase.TABLE_CUAHANG,null,values);
+        long ketqua = -1;
+       try {
+           database = databaseHelper.getWritableDatabase();
+           ContentValues values = new ContentValues();
+           values.put(UgiDatabase.COLUMN_CUAHANG_MACUAHANG,cuaHang.getMaCuaHang());
+           values.put(UgiDatabase.COLUMN_CUAHANG_TENCUAHANG,cuaHang.getTenCuahang());
+           values.put(UgiDatabase.COLUMN_CUAHANG_DIACHI,cuaHang.getDiaChi());
+           values.put(UgiDatabase.COLUMN_CUAHANG_SDT,cuaHang.getSoDienThoai());
+           values.put(UgiDatabase.COLUMN_CUAHANG_LOGO,cuaHang.getLogo());
+           ketqua = database.insert(UgiDatabase.TABLE_CUAHANG,null,values);
+       }catch (Exception ex){
+           ex.printStackTrace();
+       }finally {
+           database.close();
+       }
+        return ketqua;
     }
 
     @Override
@@ -138,12 +150,12 @@ public class ImpCuaHangDatabaseHandler implements ICuaHangDatabaseHandler {
     public int layMaCuaHangByMaNguoiDung(int maNguoiDung) {
         int maCuaHang = 0;
         database= databaseHelper.getReadableDatabase();
-        Cursor cursor = database.query(UgiDatabase.TABLE_NGUOIDUNG_CUAHANG,null,UgiDatabase.COLUMN_CUAHANG_MACUAHANG + " = ? ",
+        Cursor cursor = database.query(UgiDatabase.TABLE_NGUOIDUNG_CUAHANG,null,UgiDatabase.COLUMN_MANGUOIDUNG + " = ? ",
                 new String[]{String.valueOf(maNguoiDung)},null,null,null);
         if (cursor.moveToFirst()){
             maCuaHang = cursor.getInt(cursor.getColumnIndex(UgiDatabase.COLUMN_CUAHANG_MACUAHANG));
+            cursor.close();
         }
-        cursor.close();
         database.close();
         return maCuaHang;
     }
@@ -161,6 +173,31 @@ public class ImpCuaHangDatabaseHandler implements ICuaHangDatabaseHandler {
             database.close();
        }
         return ketqua;
+    }
+
+    @Override
+    public CuaHang checkCuaHangNguoiDung(int maNguoiDung) {
+        CuaHang cuaHang = null;
+        String query ="SELECT * FROM CuaHang ch,NguoiDung nd,NguoiDung_CuaHang ndch WHERE ch.MaCuaHang = ndch.MaCuaHang AND " +
+                "ndch.MaNguoiDung = nd.MaNguoiDung AND ndch.MaNguoiDung = "+String.valueOf(maNguoiDung);
+        database = databaseHelper.getReadableDatabase();
+         cursor = database.rawQuery(query,null);
+        try {
+            if (cursor.moveToFirst()){
+                cuaHang =new CuaHang();
+                cuaHang.setMaCuaHang(cursor.getInt(cursor.getColumnIndex(UgiDatabase.COLUMN_CUAHANG_MACUAHANG)));
+                cuaHang.setTenCuahang(cursor.getString(cursor.getColumnIndex(UgiDatabase.COLUMN_CUAHANG_TENCUAHANG)));
+            }
+
+        }catch (Exception ex){
+            Toast.makeText(context,ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }finally {
+            if (cursor!=null)
+                cursor.close();
+            database.close();
+        }
+
+        return cuaHang;
     }
 
     @Override

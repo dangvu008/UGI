@@ -61,12 +61,14 @@
             android:id="@+id/input_layout_Gia"
             >
 
-            <dang.ugi.com.customView.customEdittextEmail
+            <dang.ugi.com.customView.customEdittextNumber
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edit_GiaMon"
                 android:layout_gravity="center_horizontal"
                 android:hint="Giá"
+                android:inputType="number"
+                android:numeric="decimal"
                 android:textColor="@color/colorTextHint"
                 android:padding="10dp" />
         </android.support.design.widget.TextInputLayout>

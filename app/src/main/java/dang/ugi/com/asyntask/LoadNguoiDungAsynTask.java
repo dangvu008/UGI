@@ -11,6 +11,7 @@ import java.util.List;
 
 import dang.ugi.com.R;
 import dang.ugi.com.adapter.NguoiDungAdapter;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.NguoiDung;
 import dang.ugi.com.model.Utils.PrefNhaHang;
 import dang.ugi.com.presenter.NguoiDung.ImplNguoiDungPresenter;
@@ -27,7 +28,9 @@ public class LoadNguoiDungAsynTask extends AsyncTask<String,List<NguoiDung>,List
     private  View view;
     public LoadNguoiDungAsynTask(Context context, View view) {
         this.context = context;
-        maCuaHang  = PrefNhaHang.layCuaHangHienTai(context).getMaCuaHang();
+        CuaHang cuaHang =PrefNhaHang.layCuaHangHienTai(context);
+        if (cuaHang!=null)
+            maCuaHang  = cuaHang.getMaCuaHang();
         implNguoiDungPresenter = new ImplNguoiDungPresenter(context);
         this.view = view;
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_NguoiDung);

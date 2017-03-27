@@ -97,6 +97,11 @@ public class ImplNguoiDungPresenter implements INguoiDungPresenter {
     }
 
     @Override
+    public int lastIdNguoiDung() {
+        return dangNhapDatabaseHandler.lastIdNguoiDung();
+    }
+
+    @Override
     public boolean updateNguoiDung(NguoiDung nguoiDung) {
         return dangNhapDatabaseHandler.updateNguoiDung(nguoiDung);
     }
@@ -130,6 +135,11 @@ public class ImplNguoiDungPresenter implements INguoiDungPresenter {
     @Override
     public List<NguoiDung> timKiemNguoiDung(String keySearch, int maCuaHang) {
         return dangNhapDatabaseHandler.timKiemNguoiDung(keySearch,maCuaHang);
+    }
+
+    @Override
+    public NguoiDung checkAllowLogin(String email) {
+        return dangNhapDatabaseHandler.checkAllowLogin(email);
     }
 
     @Override
@@ -170,7 +180,7 @@ public class ImplNguoiDungPresenter implements INguoiDungPresenter {
     }
     private boolean ketqua;
     private NguoiDung nguoiDungCuoi;
-    public NguoiDung lastIdNguoiDung(){
+    /*public NguoiDung lastIdNguoiDung(){
         Retrofit retrofit = RetrofitHandler.retrofit(ConstantsNguoiDung.BASE_URL);
         RequestInterfaceNguoiDung requestInterfaceNguoiDung = retrofit.create(RequestInterfaceNguoiDung.class);
         ServerRequestNguoiDung request= new ServerRequestNguoiDung();
@@ -188,7 +198,7 @@ public class ImplNguoiDungPresenter implements INguoiDungPresenter {
             }
         });
         return nguoiDungCuoi;
-    }
+    }*/
     private CuaHang cuaHangCuoi;
     public CuaHang lastIdCuaHang(){
         Retrofit retrofit = RetrofitHandler.retrofit(ConstantsCuaHang.BASE_URL);

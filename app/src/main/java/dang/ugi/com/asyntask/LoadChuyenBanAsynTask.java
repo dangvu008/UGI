@@ -57,7 +57,7 @@ public class LoadChuyenBanAsynTask extends AsyncTask<String, List<BanAn>, List<B
     }
 
     private void hienthiTenBan(List<BanAn> list) {
-        banAnSearchAdapter = new BanAnSearchAdapter(context, 0, list);
+        banAnSearchAdapter = new BanAnSearchAdapter(context, list);
         autoCompleteTextView.setAdapter(banAnSearchAdapter);
         autoCompleteTextView.showDropDown();
         banAnSearchAdapter.setNotifyOnChange(true);

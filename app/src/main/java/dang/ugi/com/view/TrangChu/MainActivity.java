@@ -1,6 +1,5 @@
 package dang.ugi.com.view.TrangChu;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +32,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.FacebookSdk;
 
 import dang.ugi.com.R;
+import dang.ugi.com.asyntask.DownloadImage;
+import dang.ugi.com.model.Entities.CuaHang;
 import dang.ugi.com.model.Entities.NguoiDung;
 import dang.ugi.com.model.Utils.CircleTransform;
 import dang.ugi.com.model.Utils.PrefDangNhap;
@@ -53,12 +54,10 @@ import dang.ugi.com.view.MonAn.FragmentMonAn;
 import dang.ugi.com.view.MonAn.ThemMonActivity;
 import dang.ugi.com.view.NguoiDung.DangNhapActivity;
 import dang.ugi.com.view.NguoiDung.FragmentNguoiDung;
-import dang.ugi.com.view.NguoiDung.SyncNguoiDungServer;
-import dang.ugi.com.view.ThongKe.FragmentThongKe;
+import dang.ugi.com.view.ThongKe.ThongKeThangFragment;
 
 import static dang.ugi.com.model.Utils.Static_Id.REQUEST_CODE_GOIMON;
 import static dang.ugi.com.model.Utils.Static_Id.REQUEST_CODE_THEMBAN;
-import static dang.ugi.com.model.Utils.Static_Id.REQUEST_CODE_THEMBANNHANH;
 import static dang.ugi.com.model.Utils.Static_Id.REQUEST_CODE_THEMMON;
 import static dang.ugi.com.model.Utils.Static_Id.REQUEST_CODE_THEMNHANVIEN;
 
@@ -68,9 +67,9 @@ import static dang.ugi.com.model.Utils.Static_Id.REQUEST_CODE_THEMNHANVIEN;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private ImageView imageViewCancle, imageViewLogoCuaHang;
-   /* private FloatingActionButton floatingActionButton, fb_themMon, fb_ThemBan, fb_ThemNguoidung, fb_cancle, fb_goiMon;
-    private RelativeLayout layout_fb_goiMon, layout_fb_themNguoiDung, layout_fb_themBan, layout_fb_themMon;*/
-   private FloatingActionButton floatingActionButton;
+    /* private FloatingActionButton floatingActionButton, fb_themMon, fb_ThemBan, fb_ThemNguoidung, fb_cancle, fb_goiMon;
+     private RelativeLayout layout_fb_goiMon, layout_fb_themNguoiDung, layout_fb_themBan, layout_fb_themMon;*/
+    private FloatingActionButton floatingActionButton;
     private TextView textViewTenCuaHang;
     private Dialog dialog;
     private NavigationView navigationView;
@@ -101,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private String title_fragment[];
     private String tenCuaHang;
     NguoiDung nguoiDung;
+    CuaHang cuaHang;
+
     public MainActivity() {
     }
 
@@ -118,25 +119,33 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         loadHeaderNavigation();
         setupNavigationView();
         loadBarAction();
-        nguoiDung =PrefDangNhap.layNguoiDungHienTai(this);
+        nguoiDung = PrefDangNhap.layNguoiDungHienTai(this);
+        cuaHang = PrefNhaHang.layCuaHangHienTai(this);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-            if (savedInstanceState == null) {
-                itemCheckedId = 2;
-                TAG_CURRENT = TAG_BAN;
-                loadHomeFragment();
-            }
-        if (PrefNhaHang.layCuaHangHienTai(this)!=null && nguoiDung!=null) {
-            tenCuaHang = PrefNhaHang.layCuaHangHienTai(this).getTenCuahang();
-            if (nguoiDung.getMaQuyen() != 1) {
-                anItemNavigation();
-            }
-        }else{
-            implPresenterDangNhap.chuyenManHinhDanhNhap(MainActivity.this);
+        if (savedInstanceState == null) {
+            itemCheckedId = 2;
+            TAG_CURRENT = TAG_BAN;
+            loadHomeFragment();
         }
 
+        if (nguoiDung != null) {
+            if (cuaHang != null) {
+                tenCuaHang = PrefNhaHang.layCuaHangHienTai(this).getTenCuahang();
+                new DownloadImage(imageViewLogoCuaHang).execute(nguoiDung.getImage());
+                textViewTenCuaHang.setText(tenCuaHang);
+                if (nguoiDung.getMaQuyen() != 1) {
+                    anItemNavigation();
+                } else {
+                    Intent intentCH = new Intent(MainActivity.this, ThemCuaHangActivity.class);
+                    startActivity(intentCH);
+                }
+            }
+        } else {
+            implPresenterDangNhap.chuyenManHinhDanhNhap(MainActivity.this);
+        }
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
                 .penaltyDeath().build());
 
@@ -167,36 +176,46 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         loadFragment(fragment);
         drawerLayout.closeDrawers();
     }
-    public void loadFragment(Fragment fragment){
+
+    public void loadFragment(Fragment fragment) {
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         transaction.replace(R.id.fl_content, fragment, TAG_CURRENT);
         transaction.commit();
         drawerLayout.closeDrawers();
     }
+
     private Fragment getFragmentHome() {
-        Fragment fragment =null;
+        Fragment fragment = null;
         switch (itemCheckedId) {
             case 0: {
-               fragment = new FragmentGoiMon();
-            }break;
+                fragment = new FragmentGoiMon();
+            }
+            break;
             case 1: {
                 fragment = new FragmentMonAn();
-            }break;
+            }
+            break;
             case 2: {
-               fragment= new FragmentBanAn();
-            }break;
+                fragment = new FragmentBanAn();
+            }
+            break;
             case 3: {
-               fragment = new FragmentNguoiDung();
-            }break;
+                fragment = new FragmentNguoiDung();
+            }
+            break;
             case 4: {
-               fragment = new FragmentCuaHang();
-            }break;
+                fragment = new FragmentCuaHang();
+                floatingActionButton.setVisibility(View.GONE);
+            }
+            break;
             case 5: {
-               fragment = new FragmentThongKe();
-            }break;
+                fragment = new ThongKeThangFragment();
+                floatingActionButton.setVisibility(View.GONE);
+            }
+            break;
             default:
-                fragment= new FragmentBanAn();
+                fragment = new FragmentBanAn();
         }
         return fragment;
 
@@ -217,29 +236,35 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     case R.id.item_drawer_goiMon: {
                         TAG_CURRENT = TAG_GOIMON;
                         itemCheckedId = 0;
-                    }break;
+                    }
+                    break;
 
                     case R.id.item_drawer_thucdon: {
                         TAG_CURRENT = TAG_THUCDON;
                         itemCheckedId = 1;
-                    }break;
+                    }
+                    break;
 
                     case R.id.item_drawer_ban: {
                         TAG_CURRENT = TAG_BAN;
                         itemCheckedId = 2;
-                    }break;
+                    }
+                    break;
                     case R.id.item_drawer_NguoiDung: {
                         TAG_CURRENT = TAG_NGUOIDUNG;
                         itemCheckedId = 3;
-                    } break;
+                    }
+                    break;
                     case R.id.item_drawer_cuahang: {
                         TAG_CURRENT = TAG_CUAHANG;
                         itemCheckedId = 4;
-                    } break;
+                    }
+                    break;
                     case R.id.item_drawer_thongke: {
                         TAG_CURRENT = TAG_THONGKE;
                         itemCheckedId = 5;
-                    }  break;
+                    }
+                    break;
                     default:
                         itemCheckedId = 2;
                 }
@@ -348,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
                 if (itemCheckedId == 4) {
                     Intent intent = new Intent(MainActivity.this, ThemCuaHangActivity.class);
-                   startActivity(intent);
+                    startActivity(intent);
                 }
 
             }
@@ -357,32 +382,34 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void chuyenManHinhThemThucDon(View view) {
-        final PopupMenu popupMenu = new PopupMenu(this,view);
+        final PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.setGravity(Gravity.CENTER_HORIZONTAL);
-         MenuInflater menuInflater = popupMenu.getMenuInflater();
-        menuInflater.inflate(R.menu.popup_menu_themmon,popupMenu.getMenu());
+        MenuInflater menuInflater = popupMenu.getMenuInflater();
+        menuInflater.inflate(R.menu.popup_menu_themmon, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.item_popup_themMon_themLoaiCoSan:{
+                switch (item.getItemId()) {
+                    case R.id.item_popup_themMon_themLoaiCoSan: {
                         Intent intent = new Intent(MainActivity.this, ChonLoaiMonAnActivity.class);
                         startActivityForResult(intent, REQUEST_CODE_THEMMON);
-                    }break;
-                    case R.id.item_popup_themMon_ChonCoSan:{
-                       chuyenManHInhThemMonCoSan();
                     }
                     break;
-                    case R.id.item_popup_themMon_ThemMoi:{
+                    case R.id.item_popup_themMon_ChonCoSan: {
+                        chuyenManHInhThemMonCoSan();
+                    }
+                    break;
+                    case R.id.item_popup_themMon_ThemMoi: {
                         Intent intent = new Intent(MainActivity.this, ThemMonActivity.class);
                         startActivityForResult(intent, REQUEST_CODE_THEMMON);
-                    }break;
+                    }
+                    break;
                 }
 
                 return false;
             }
 
-            
+
         });
         popupMenu.show();
     }
@@ -391,18 +418,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         itemCheckedId = 7;
         FragmentChonMonCoSan fragmentChonMonCoSan = new FragmentChonMonCoSan();
         Bundle bundle = new Bundle();
-        bundle.putInt("chucnang",2);
+        bundle.putInt("chucnang", 2);
         fragmentChonMonCoSan.setArguments(bundle);
         loadFragment(fragmentChonMonCoSan);
     }
 
 
     private void chuyenManHinhGoiMon() {
-        Intent intent = new Intent(MainActivity.this,GoiMonActivity.class);
+        Intent intent = new Intent(MainActivity.this, GoiMonActivity.class);
         startActivityForResult(intent, REQUEST_CODE_GOIMON);
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
      if (requestCode==REQUEST_CODE_THEMBAN || requestCode ==REQUEST_CODE_THEMBANNHANH && resultCode == Activity.RESULT_OK){
@@ -411,11 +438,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (requestCode==REQUEST_CODE_GOIMON && resultCode ==Activity.RESULT_OK){
 
         }
-    }
+    }*/
 
 
-    public  void showPopupMenutThemBan(View view) {
-        PopupMenu popupMenu = new PopupMenu(this,view,Gravity.CENTER_VERTICAL);
+    public void showPopupMenutThemBan(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view, Gravity.CENTER_VERTICAL);
         final MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.popup_menu_themban, popupMenu.getMenu());
 
@@ -453,9 +480,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 return false;
             }
 
-            
+
         });
-        if (nguoiDung!=null)
+        if (nguoiDung != null)
             item_ten.setTitle(nguoiDung.getTenNguoiDung());
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item_search);
         searchView.setOnQueryTextListener(this);
@@ -484,8 +511,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             //showPopupMenutThemBan(floatingActionButton);
         }
         if (itemCheckedId == 3) {
-            SyncNguoiDungServer syncNguoiDungServer = new SyncNguoiDungServer(this);
-            syncNguoiDungServer.syncNguoiDungToServer();
+            //SyncNguoiDungServer syncNguoiDungServer = new SyncNguoiDungServer(this);
+            // syncNguoiDungServer.syncNguoiDungToServer();
            /* Intent intent = new Intent(MainActivity.this, DangNhapActivity.class);
             startActivityForResult(intent, REQUEST_CODE_THEMNHANVIEN);*/
         }
@@ -516,7 +543,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-         bundle = new Bundle();
+        bundle = new Bundle();
         bundle.putString("keySearch", s);
         fragment.setArguments(bundle);
         return false;
@@ -531,7 +558,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         loadFragment(fragment);
         return false;
     }
- }
+}
 
 
 
